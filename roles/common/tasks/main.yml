@@ -1,0 +1,13 @@
+---
+# This playbook contains common plays that will be run on all nodes.
+
+- name: Install Python
+  apt:
+    name: python
+    state: present
+    update_cache: yes
+  notify:
+#    - Reboot host
+  tags:
+    - python
+    - desktop

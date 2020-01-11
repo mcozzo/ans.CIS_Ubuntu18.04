@@ -1,0 +1,54 @@
+---
+# This playbook contains Ubuntu 18.04LTS CIS benchmark v1.0.0 settings
+
+# Also 1.7.1.4 /etc/motd = 0644,
+- name: 1.7.1.1,1.7.1.4 - Set MOTD, root:root, 0644
+  template:
+    src: etc_motd.j2
+    dest: /etc/motd
+    mode: '0644'
+    owner: root
+    group: root
+  tags:
+    - banner
+
+- name: 1.7.1.2 - Scrub logon banner of "\m, \r, \s, \v"
+  replace:
+    path: /etc/issue
+#    state: absent
+    regexp: '(?i)\\[mrsv]'
+    replace: ""
+    backup: yes
+  tags:
+    - banner
+
+- name: 1.7.1.3 - Scrub remote logon banner of "\m, \r, \s, \v"
+  replace:
+    path: /etc/issue.net
+#    state: absent
+    regexp: '(?i)\\[mrsv]'
+    replace: ""
+    backup: yes
+  tags:
+    - banner
+
+- name: 1.7.1.5 - Settings for /etc/issue, root:root, 0644
+  file:
+    path: /etc/issue
+    mode: '0644'
+    owner: root
+    group: root
+  tags:
+    - banner
+
+- name: 1.7.1.6 - Settings for /etc/issue.net, root:root, 0644
+  file:
+    path: /etc/issue
+    mode: '0644'
+    owner: root
+    group: root
+  tags:
+    - banner
+
+# 1.7.2 - GNOME / GDM shouldn't be installed on servers, therefore no need to provide GDM banner
+

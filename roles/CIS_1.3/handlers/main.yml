@@ -1,0 +1,16 @@
+---
+# This playbook contains common handlers that can be called in "setup" tasks.
+
+#handlers:
+
+- name: Reboot host
+  reboot:
+
+- name: restart ssh
+  systemd:
+    name: sshd
+    state: restarted
+    enabled: yes
+
+
+

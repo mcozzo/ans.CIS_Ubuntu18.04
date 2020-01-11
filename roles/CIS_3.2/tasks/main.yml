@@ -1,0 +1,181 @@
+---
+# This playbook contains Ubuntu 18.04LTS CIS benchmark v1.0.0 settings
+
+- name: 3.2.1 - Do not accept source routed packets 'net.ipv4.conf.all.accept_source_route = 0'
+  lineinfile:
+    dest: /etc/sysctl.conf
+    state: present
+    backup: yes
+    regexp: 'net\.ipv4\.conf\.all\.accept\_source\_route'
+    line: 'net.ipv4.conf.all.accept_source_route = 0'
+  tags:
+    - packet redirect
+  notify:
+    - Reboot host
+
+- name: 3.2.1 - Do not accept source routed packets 'net.ipv4.conf.default.accept_source_route = 0'
+  lineinfile:
+    dest: /etc/sysctl.conf
+    state: present
+    backup: yes
+    regexp: 'net\.ipv4\.conf\.default\.accept\_source\_route'
+    insertafter: 'net\.ipv4\.conf\.all\.accept\_source\_route'
+    line: 'net.ipv4.conf.default.accept_source_route = 0'
+  tags:
+    - packet redirect
+  notify:
+    - Reboot host
+
+- name: 3.2.2 - Do not accept ICMP redirects 'net.ipv4.conf.all.accept_redirects = 0'
+  lineinfile:
+    dest: /etc/sysctl.conf
+    state: present
+    backup: yes
+    regexp: 'net\.ipv4\.conf\.all\.accept\_redirects'
+    line: 'net.ipv4.conf.all.accept_redirects = 0'
+  tags:
+    - packet redirect
+  notify:
+    - Reboot host
+
+- name: 3.2.2 - Do not accept ICMP redirects 'net.ipv4.conf.default.accept_redirects = 0'
+  lineinfile:
+    dest: /etc/sysctl.conf
+    state: present
+    backup: yes
+    regexp: 'net\.ipv4\.conf\.default\.accept\_redirects'
+    insertafter: 'net\.ipv4\.conf\.all\.accept\_redirects'
+    line: 'net.ipv4.conf.default.accept_redirects = 0'
+  tags:
+    - packet redirect
+  notify:
+    - Reboot host
+
+- name: 3.2.3 - Do not accept secure ICMP redirects 'net.ipv4.conf.all.secure_redirects = 0'
+  lineinfile:
+    dest: /etc/sysctl.conf
+    state: present
+    backup: yes
+    regexp: 'net\.ipv4\.conf\.all\.secure\_redirects'
+    line: 'net.ipv4.conf.all.secure_redirects = 0'
+  tags:
+    - packet redirect
+  notify:
+    - Reboot host
+
+- name: 3.2.3 - Do not accept secure ICMP redirects 'net.ipv4.conf.default.secure_redirects = 0'
+  lineinfile:
+    dest: /etc/sysctl.conf
+    state: present
+    backup: yes
+    regexp: 'net\.ipv4\.conf\.default\.secure\_redirects'
+    insertafter: 'net\.ipv4\.conf\.all\.secure\_redirects'
+    line: 'net.ipv4.conf.default.secure_redirects = 0'
+  tags:
+    - packet redirect
+  notify:
+    - Reboot host
+
+- name: 3.2.4 - Log suspicious packets 'net.ipv4.conf.all.log_martians = 1'
+  lineinfile:
+    dest: /etc/sysctl.conf
+    state: present
+    backup: yes
+    regexp: 'net\.ipv4\.conf\.all\.log\_martians'
+    line: 'net.ipv4.conf.all.log_martians = 1'
+  tags:
+    - packet redirect
+  notify:
+    - Reboot host
+
+- name: 3.2.4 - Log suspicious packets 'net.ipv4.conf.default.log_martians = 1'
+  lineinfile:
+    dest: /etc/sysctl.conf
+    state: present
+    backup: yes
+    regexp: 'net\.ipv4\.conf\.default\.log\_martians'
+    insertafter: 'net\.ipv4\.conf\.all\.log\_martians'
+    line: 'net.ipv4.conf.default.log_martians = 1'
+  tags:
+    - packet redirect
+  notify:
+    - Reboot host
+
+- name: 3.2.5 - Ignore broadcast ICMP 'net.ipv4.icmp_echo_ignore_broadcasts = 1'
+  lineinfile:
+    dest: /etc/sysctl.conf
+    state: present
+    backup: yes
+    regexp: 'net\.ipv4\.icmp\_echo\_ignore\_broadcasts'
+    line: 'net.ipv4.icmp_echo_ignore_broadcasts = 1'
+  tags:
+    - packet redirect
+  notify:
+    - Reboot host
+
+- name: 3.2.6 - Ignore bogus ICMP responses 'net.ipv4.icmp_ignore_bogus_error_responses = 1'
+  lineinfile:
+    dest: /etc/sysctl.conf
+    state: present
+    backup: yes
+    regexp: 'net\.ipv4\.icmp\_ignore\_bogus\_error\_responses'
+    line: 'net.ipv4.icmp_ignore_bogus_error_responses = 1'
+  tags:
+    - packet redirect
+  notify:
+    - Reboot host
+
+- name: 3.2.7 - Enable reverse path filtering 'net.ipv4.conf.all.rp_filter = 1'
+  lineinfile:
+    dest: /etc/sysctl.conf
+    state: present
+    backup: yes
+    regexp: 'net\.ipv4\.conf\.all\.rp\_filter'
+    line: 'net.ipv4.conf.all.rp_filter = 1'
+  tags:
+    - packet redirect
+  notify:
+    - Reboot host
+
+- name: 3.2.7 - Enable reverse path filtering 'net.ipv4.conf.default.rp_filter = 1'
+  lineinfile:
+    dest: /etc/sysctl.conf
+    state: present
+    backup: yes
+    regexp: 'net\.ipv4\.conf\.default\.rp\_filter'
+    insertafter: 'net\.ipv4\.conf\.all\.rp\_filter'
+    line: 'net.ipv4.conf.default.rp_filter = 1'
+  tags:
+    - packet redirect
+  notify:
+    - Reboot host
+
+- name: 3.2.8 - Enable TCP SYN cookies 'net.ipv4.tcp_syncookies = 1'
+  lineinfile:
+    dest: /etc/sysctl.conf
+    state: present
+    backup: yes
+    regexp: 'net\.ipv4\.tcp\_syncookies'
+    line: 'net.ipv4.tcp_syncookies = 1'
+  tags:
+    - packet redirect
+  notify:
+    - Reboot host
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

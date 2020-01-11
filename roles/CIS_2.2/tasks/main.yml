@@ -1,0 +1,405 @@
+---
+# This playbook contains Ubuntu 18.04LTS CIS benchmark v1.0.0 settings
+
+- name: 2.2.1.1 - Install NTP
+  apt:
+    name: ntp
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  tags:
+    - ntp
+  notify:
+    - Restart NTP
+
+- name: 2.2.1.2 - Verify NTP config /etc/ntp.conf from template
+  template:
+    src: ntp.conf.j2
+    dest: /etc/ntp.conf
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+    - ntp
+  notify:
+    - Restart NTP
+
+- name: 2.2.1.2 - Verify NTP 'RUNASUSER=ntp'
+  lineinfile:
+    dest: /etc/init.d/ntp
+    state: present
+    regexp: 'RUNASUSER\=ntp'
+    line: 'RUNASUSER=ntp'
+  tags:
+    - ntp
+  notify:
+    - Restart NTP
+
+# 2.2.1.3 - Chrony config not relevant because using ntp
+
+- name: 2.2.2 - Remove xserver-xorg*
+  apt:
+    name: xserver-xorg*
+    state: absent
+  tags:
+    - xserver
+  notify:
+    - Reboot host
+
+- name: 2.2.3 - Check service avahi exists
+  stat: path=/etc/init.d/avahi-daemon
+  register: avahi_status
+  tags:
+    - services
+
+- name: 2.2.3 - Disable avahi
+  systemd:
+    name: avahi-daemon
+    enabled: no
+    masked: yes
+  when: avahi_status.stat.exists
+  tags:
+    - services
+
+- name: 2.2.3 - Remove avahi
+  apt:
+    name: avahi
+    state: absent
+  tags:
+    - services
+
+- name: 2.2.4 - Check service cups exists
+  stat: path=/etc/init.d/cups
+  register: cups_status
+  tags:
+    - services
+
+- name: 2.2.4 - Disable cups
+  systemd:
+    name: cups
+    enabled: no
+    masked: yes
+  when: cups_status.stat.exists
+  tags:
+    - services
+
+- name: 2.2.4 - Remove cups
+  apt:
+    name: cups
+    state: absent
+  tags:
+    - services
+
+- name: 2.2.5 - Check dhcp server exists
+  stat: path=/etc/init.d/isc-dhcp-server
+  register: isc_dhcp_server_status
+  tags:
+    - services
+
+- name: 2.2.5 - Disable isc-dhcp-server
+  systemd:
+    name: isc-dhcp-server
+    enabled: no
+    masked: yes
+  when: isc_dhcp_server_status.stat.exists
+  tags:
+    - services
+
+- name: 2.2.5 - Remove isc-dhcp-server
+  apt:
+    name: isc-dhcp-server
+    state: absent
+  tags:
+    - services
+
+- name: 2.2.5 - Check dhcp server6 exists
+  stat: path=/etc/init.d/isc-dhcp-server6
+  register: isc_dhcp_server6_status
+  tags:
+    - services
+
+- name: 2.2.5 - Disable isc-dhcp-server6
+  systemd:
+    name: isc-dhcp-server6
+    enabled: no
+    masked: yes
+  when: isc_dhcp_server6_status.stat.exists
+  tags:
+    - services
+
+- name: 2.2.6 - Check LDAP server slapd exists
+  stat: path=/etc/init.d/slapd
+  register: slapd_status
+  tags:
+    - services
+
+- name: 2.2.6 - Disable LDAP server slapd
+  systemd:
+    name: slapd
+    enabled: no
+    masked: yes
+  when: slapd_status.stat.exists
+  tags:
+    - services
+
+- name: 2.2.6 - Remove LDAP server slapd
+  apt:
+    name: slapd
+    state: absent
+  tags:
+    - services
+
+- name: 2.2.7 - Check NFS server exists
+  stat: path=/etc/init.d/nfs-server
+  register: nfs_server_status
+  tags:
+    - services
+
+- name: 2.2.7 - Disable NFS server
+  systemd:
+    name: nfs-server
+    enabled: no
+    masked: yes
+  when: nfs_server_status.stat.exists
+  tags:
+    - services
+
+- name: 2.2.7 - Check RPCBIND server exists
+  stat: path=/etc/init.d/rpcbind
+  register: rpcbind_server_status
+  tags:
+    - services
+
+- name: 2.2.7 - Disable RPCBIND server
+  systemd:
+    name: rpcbind
+    enabled: no
+    masked: yes
+  when: rpcbind_server_status.stat.exists
+  tags:
+    - services
+
+- name: 2.2.7 - Remove NFS & RPCBIND
+  apt:
+    name: nfs-kernel-server, rpcbind
+    state: absent
+  tags:
+    - services
+
+- name: 2.2.8 - Check bind9 server exists
+  stat: path=/etc/init.d/rpcbind
+  register: bind9_server_status
+  tags:
+    - services
+
+- name: 2.2.8 - Disable bind9 server
+  systemd:
+    name: bind9
+    enabled: no
+    masked: yes
+  when: bind9_server_status.stat.exists
+  tags:
+    - services
+
+- name: 2.2.8 - Remove bind9
+  apt:
+    name: bind9
+    state: absent
+  tags:
+    - services
+
+- name: 2.2.9 - Check vsftpd server exists
+  stat: path=/etc/init.d/vsftpd
+  register: vsftpd_server_status
+  tags:
+    - services
+
+- name: 2.2.9 - Disable vsftpd server
+  systemd:
+    name: vsftpd
+    enabled: no
+    masked: yes
+  when: vsftpd_server_status.stat.exists
+  tags:
+    - services
+
+- name: 2.2.9 - Remove NFS & RPCBIND
+  apt:
+    name: vsftpd
+    state: absent
+  tags:
+    - services
+
+- name: 2.2.10 - Check apache2 server exists
+  stat: path=/etc/init.d/apache2
+  register: apache2_server_status
+  tags:
+    - services
+
+- name: 2.2.10 - Disable apache2 server
+  systemd:
+    name: apache2
+    enabled: no
+    masked: yes
+  when: apache2_server_status.stat.exists
+  tags:
+    - services
+
+- name: 2.2.10 - Check nginx server exists
+  stat: path=/etc/init.d/nginx
+  register: nginx_server_status
+  tags:
+    - services
+
+- name: 2.2.10 - Disable nginx server
+  systemd:
+    name: nginx
+    enabled: no
+    masked: yes
+  when: nginx_server_status.stat.exists
+  tags:
+    - services
+
+- name: 2.2.10 - Remove apache2 & nginx
+  apt:
+    name: apache2, nginx
+    state: absent
+  tags:
+    - services
+
+- name: 2.2.11 - Check dovecot server exists
+  stat: path=/etc/init.d/dovecot
+  register: dovecot_server_status
+  tags:
+    - services
+
+- name: 2.2.11 - Disable dovecot server
+  systemd:
+    name: dovecot
+    enabled: no
+    masked: yes
+  when: dovecot_server_status.stat.exists
+  tags:
+    - services
+
+- name: 2.2.11 - Remove dovecot
+  apt:
+    name: dovecot*
+    state: absent
+  tags:
+    - services
+
+- name: 2.2.12 - Check samba server exists
+  stat: path=/etc/init.d/smbd
+  register: smbd_server_status
+  tags:
+    - services
+
+- name: 2.2.12 - Disable samba server
+  systemd:
+    name: smbd
+    enabled: no
+    masked: yes
+  when: smbd_server_status.stat.exists
+  tags:
+    - services
+
+- name: 2.2.12 - Remove samba
+  apt:
+    name: samba
+    state: absent
+  tags:
+    - services
+
+- name: 2.2.13 - Check squid server exists
+  stat: path=/etc/init.d/squid
+  register: squid_server_status
+  tags:
+    - services
+
+- name: 2.2.13 - Disable squid server
+  systemd:
+    name: squid
+    enabled: no
+    masked: yes
+  when: squid_server_status.stat.exists
+  tags:
+    - services
+
+- name: 2.2.13 - Remove squid
+  apt:
+    name: squid
+    state: absent
+  tags:
+    - services
+
+- name: 2.2.14 - Check snmpd server exists
+  stat: path=/etc/init.d/snmpd
+  register: snmpd_server_status
+  tags:
+    - services
+
+- name: 2.2.14 - Disable snmpd server
+  systemd:
+    name: snmpd
+    enabled: no
+    masked: yes
+  when: snmpd_server_status.stat.exists
+  tags:
+    - services
+
+- name: 2.2.14 - Remove snmpd
+  apt:
+    name: snmpd
+    state: absent
+  tags:
+    - services
+
+- name: 2.2.15 - Disable postfix listening
+  lineinfile:
+    dest: /etc/postfix/main.cf
+    state: present
+    regexp: 'inet_interfaces'
+    line: 'inet_interfaces = loopback-only'
+  tags:
+    - ntp
+  notify:
+    - Restart postfix
+
+- name: 2.2.16 - Check rsync server exists
+  stat: path=/etc/init.d/rsync
+  register: rsync_server_status
+  tags:
+    - services
+
+- name: 2.2.16 - Disable rsync server
+  systemd:
+    name: rsync
+    enabled: no
+    masked: yes
+  when: snmpd_server_status.stat.exists
+  tags:
+    - services
+
+## Rsync is used quite often, maybe don't remove it.
+#- name: 2.2.16 - Remove rsync
+#  apt:
+#    name: rsync
+#    state: absent
+#  tags:
+#    - services
+
+- name: 2.2.17 - Check nis server exists
+  stat: path=/etc/init.d/nis
+  register: nis_server_status
+  tags:
+    - services
+
+- name: 2.2.17 - Disable nis server
+  systemd:
+    name: nis
+    enabled: no
+    masked: yes
+  when: nis_server_status.stat.exists
+  tags:
+    - services

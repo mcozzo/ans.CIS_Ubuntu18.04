@@ -1,0 +1,17 @@
+---
+# This playbook contains common handlers that can be called in "setup" tasks.
+
+#handlers:
+
+- name: Reboot host
+  reboot:
+
+- name: Restart NTP
+  systemd:
+    state: restarted
+    name: ntp
+
+- name: Restart postfix
+  systemd:
+    state: restarted
+    name: postfix

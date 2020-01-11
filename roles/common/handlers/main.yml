@@ -1,0 +1,6 @@
+---
+# This playbook contains common handlers that can be called in "setup" tasks.
+
+# sudo systemctl enable docker
+- name: Reboot host
+  reboot:

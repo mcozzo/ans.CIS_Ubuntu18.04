@@ -1,0 +1,47 @@
+---
+# This playbook contains Ubuntu 18.04LTS CIS benchmark v1.0.0 settings
+
+# Get keys from https://ftp-master.debian.org/keys/
+- name: 1.4.1 - Set permissions on grub
+  file:
+    path: /boot/grub/grub.cfg
+    owner: root
+    group: root
+    mode: '0400'
+  tags:
+    - boot
+  notify:
+    - Reboot host
+
+# From an ubuntu box run the following
+# grub-mkpasswd-pbkdf2
+# update the etc_grub.d_40_custom file in the template folder for this role
+# default credentials
+# UN: root
+# PW: P@ssw0rd
+- name: 1.4.2 - Set grub password file
+  template:
+    src: etc_grub.d_40_custom.j2
+    dest: /etc/grub.d/40_custom
+    mode: '0755'
+  tags:
+    - boot
+  notify:
+    - Update Grub2 config file ubuntu
+    - Reboot host
+
+# Allow system to auto boot
+- name: 1.4.2 - Set grub menu entry --unrestricted
+  lineinfile:
+    dest: /etc/grub.d/10_linux
+    state: present
+    regexp: ^CLASS="--class gnu-linux --class gnu --class os"
+    line: CLASS="--class gnu-linux --class gnu --class os --unrestricted"
+  tags:
+    - boot
+  notify:
+    - Reboot host
+    - Update Grub2 config file ubuntu
+
+#- name: 1.4.3 - Set root password
+#  user: name=root password="{{ UBUNTU_COMMON_ROOT_PASSWORD }}"

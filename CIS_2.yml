@@ -1,0 +1,26 @@
+---
+# This playbook is for my stuff
+
+- name: Apply CIS 2.1
+  hosts: all
+  roles:
+    - CIS_2.1
+  become: yes
+  tags:
+    - CIS_2.1
+
+- name: Apply CIS 2.2
+  hosts: all
+  roles:
+    - CIS_2.2
+  become: yes
+  tags:
+    - CIS_2.2
+
+- name: Apply CIS 2.3
+  hosts: all
+  roles:
+    - CIS_2.3
+  become: yes
+  tags:
+    - CIS_2.3

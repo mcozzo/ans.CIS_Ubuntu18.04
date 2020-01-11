@@ -1,0 +1,53 @@
+---
+# This playbook contains Ubuntu 18.04LTS CIS benchmark v1.0.0 settings
+
+- name: 1.5.1 - Restrict core dumps
+  lineinfile:
+    dest: /etc/security/limits.conf
+    state: present
+    regexp: '\*               hard    core             0'
+    line: '*               hard    core             0'
+    insertbefore: 'End of file'
+  tags:
+    - process hardening
+  notify:
+    - Reboot host
+
+- name: 1.5.1 - Restrict core dumps
+  lineinfile:
+    dest: /etc/sysctl.conf
+    state: present
+    regexp: 'fs\.suid\_dumpable \= 0'
+    line: 'fs.suid_dumpable = 0'
+  tags:
+    - process hardening
+  notify:
+    - Reboot host
+# Evaluate adding "sysctl -p" to crontab based on this bug
+# https://bugs.launchpad.net/ubuntu/+source/procps/+bug/50093
+
+# 1.5.2
+# verify NX or XD support is configured in Bios
+# Should be on by default
+
+- name: 1.5.3 - Address space layout rendomization (ASLR)
+  lineinfile:
+    dest: /etc/sysctl.conf
+    state: present
+    regexp: 'kernel\.randomize_va_space \= 2'
+    line: 'kernel.randomize_va_space = 2'
+  tags:
+    - process hardening
+  notify:
+    - Reboot host
+
+- name: 1.5.4 - Disable prelink
+  # Prelink is not installed by default
+  apt:
+    name: prelink
+    state: absent
+#    update_cache: yes
+  tags:
+    - process hardening
+
+

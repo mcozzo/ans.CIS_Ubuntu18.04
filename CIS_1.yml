@@ -1,0 +1,115 @@
+---
+# This playbook is for my stuff
+
+- name: Apply CIS 1.1
+  hosts: all
+  roles:
+    - CIS_1.1
+  become: yes
+  tags:
+    - CIS_1.1
+
+- name: Apply CIS 1.2
+  hosts: all
+  roles:
+    - CIS_1.2
+  become: yes
+  tags:
+    - CIS_1.2
+
+- name: Apply CIS 1.3
+  hosts: all
+  roles:
+    - CIS_1.3
+  become: yes
+  tags:
+    - CIS_1.3
+
+- name: Apply CIS 1.4
+  hosts: all
+  roles:
+    - CIS_1.4
+  become: yes
+  tags:
+    - CIS_1.4
+
+- name: Apply CIS 1.5
+  hosts: all
+  roles:
+    - CIS_1.5
+  become: yes
+  tags:
+    - CIS_1.5
+
+- name: Apply CIS 1.6
+  hosts: all
+  roles:
+    - CIS_1.6
+  become: yes
+  tags:
+    - CIS_1.6
+
+- name: Apply CIS 1.7
+  hosts: all
+  roles:
+    - CIS_1.7
+  become: yes
+  tags:
+    - CIS_1.7
+
+- name: Apply CIS 1.8
+  hosts: all
+  roles:
+    - CIS_1.8
+  become: yes
+  tags:
+    - CIS_1.8
+
+
+#- name: Apply Desktop
+#  hosts: all
+#  roles:
+#    - desktop
+#  become: yes
+
+#- name: Install Docker
+#  hosts: all
+#  roles:
+#    - dockerhosts
+#  become: yes
+
+#- name: Download cozzo.net docker configs
+#  hosts: all
+#  roles:
+#    - docker-compose
+
+
+#  become_user: ubuntu
+
+#- name: Apply network config to all nodes
+#  hosts: all
+#  roles:
+#    - network
+#  become: yes
+
+#- name: Mount common volumes on all nodes
+#  hosts: all
+#  roles:
+#    - mounts
+#  become: yes
+
+#  become: yes
+
+
+#- name: Enabling passwordless login on the remote host
+#  hosts: all
+#  vars:
+#    username: devops
+#  tasks:
+#  - name: Allow 'wheel' group to have passwordless sudo
+#    lineinfile:
+#      dest: /etc/sudoers
+#      state: present
+#      regexp: '^%wheel'
+#      line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+#      validate: 'visudo -cf %s'

@@ -1,0 +1,17 @@
+---
+# This playbook contains common handlers that can be called in "setup" tasks.
+
+#handlers:
+
+- name: Update Grub2 config file ubuntu
+  shell: /usr/sbin/update-grub
+
+- name: Reboot host
+  reboot:
+
+- name: restart ssh
+  systemd:
+    name: sshd
+    state: restarted
+    enabled: yes
+

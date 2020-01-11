@@ -1,0 +1,58 @@
+---
+# This playbook contains Ubuntu 18.04LTS CIS benchmark v1.0.0 settings
+
+# 2.1.1 - Check file /etc/inetd.conf
+- stat:
+    path: /etc/inetd.conf
+  register: inetd_conf
+
+- name: 2.1.1 - Disable chargen, scrub from /etc/inetd.conf
+  replace:
+    path: /etc/inetd.conf
+    regexp: '(?i)chargen'
+    replace: "#chargen"
+    backup: yes
+  when: inetd_conf.stat.exists
+#  tags:
+#    - banner
+
+# Does not fail gracefully when there are no files in the folder
+# 2.1.1, 2.1.2, 2.1.3, 2.1.4, 2.1.5, 2.1.6, 2.1.7, 2.1.8, 2.1.9
+# however, 2.1.10 disables xinetd
+
+## 2.1.1 - Check file /etc/inetd.d/*
+#- find:
+##    paths: /etc/inetd.d/*
+#    paths: /home/mattcozzolino/inetd.d
+#  register: inetd_d
+
+#- name: 2.1.1 - Disable chargen, scrub from /etc/inetd.d/*.
+#  replace:
+##    path: /etc/inetd.d/*
+#    path: inetd_d.files
+#    regexp: '(?i)chargen'
+#    replace: "#chargen"
+#    backup: yes
+##  when: inetd_d.stat.exists
+#  tags:
+#    - banner
+
+- name: 2.1.10 - Check service xinetd exists
+  stat: path=/etc/init.d/xinetd
+  register: xinetd_status
+
+- name: 2.1.10 - Disable xinetd
+  systemd:
+    name: xinetd
+    enabled: no
+    masked: yes
+  when: xinetd_status.stat.exists
+
+- name: 2.1.11 - Remove openbsd-inetd
+  apt:
+    name: openbsd-inetd
+    state: absent
+  tags:
+    - services
+  notify:
+    - Reboot host

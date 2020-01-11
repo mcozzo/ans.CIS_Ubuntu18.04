@@ -1,0 +1,21 @@
+---
+# This playbook is for my stuff
+
+#- name: Apply network config
+#  hosts: all
+#  roles:
+#    - network
+#  become: yes
+
+- name: Apply common config
+  hosts: all
+  roles:
+    - common
+  become: yes
+
+#- name: Apply user config
+#  hosts: all
+#  roles:
+#    - user
+#  become: yes
+

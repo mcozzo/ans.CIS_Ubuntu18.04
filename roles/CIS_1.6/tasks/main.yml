@@ -1,0 +1,43 @@
+---
+# This playbook contains Ubuntu 18.04LTS CIS benchmark v1.0.0 settings
+
+- name: 1.6.1 - Force SE Linux. Remove "selinux=0"
+  replace:
+    path: /etc/default/grub
+#    state: absent
+    regexp: '(?i)selinux=0'
+    replace: ""
+    backup: yes
+  tags:
+    - SELinux
+#  notify:
+#    - Reboot host
+#    - Update Grub2 config file ubuntu
+
+- name: 1.6.1 - Force SE Linux. Remove "enforcing=0"
+  replace:
+    path: /etc/default/grub
+#    state: absent
+    regexp: '(?i)enforcing=0'
+    replace: ""
+    backup: yes
+  tags:
+    - SELinux
+#  notify:
+#    - Reboot host
+#    - Update Grub2 config file ubuntu
+
+# L2 setting
+# There isn't a /etc/selinux/config file. Just /etc/selinux/semanage.conf
+#- name: 1.6.1.2 - Force SElinux
+#  replace:
+#    path: /etc/default/grub
+##    state: absent
+#    regexp: '(?i)selinux=0'
+#    replace: ""
+#    backup: yes
+#  tags:
+#    - SELinux
+##  notify:
+##    - Reboot host
+##    - Update Grub2 config file ubuntu

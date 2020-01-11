@@ -1,0 +1,15 @@
+---
+# This playbook contains Ubuntu 18.04LTS CIS benchmark v1.0.0 settings
+
+# Get keys from https://ftp-master.debian.org/keys/
+- name: 1.2.2 - Update apt-keys
+  apt_key:
+    url: https://ftp-master.debian.org/keys/archive-key-10.asc
+    state: present
+
+- name: 1.2.1 - Update apt
+  apt:
+    update_cache: yes
+  tags:
+    - apt
+
