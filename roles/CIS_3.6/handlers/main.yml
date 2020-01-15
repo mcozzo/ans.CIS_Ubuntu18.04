@@ -1,0 +1,15 @@
+---
+# This playbook contains common handlers that can be called in "setup" tasks.
+
+#handlers:
+
+- name: save iptables v4 rules
+  shell: iptables-save > /etc/iptables/rules.v4
+  listen: persist iptables
+
+- name: save iptables v6 rules
+  shell: ip6tables-save > /etc/iptables/rules.v6
+  listen: persist iptables
+
+- name: Reboot host
+  reboot:

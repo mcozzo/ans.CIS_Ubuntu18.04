@@ -24,3 +24,35 @@
   become: yes
   tags:
     - CIS_3.3
+
+- name: Apply CIS 3.4
+  hosts: all
+  roles:
+    - CIS_3.4
+  become: yes
+  tags:
+    - CIS_3.4
+
+- name: Apply CIS 3.5
+  hosts: all
+  roles:
+    - CIS_3.5
+  become: yes
+  tags:
+    - CIS_3.5
+
+- name: Apply CIS 3.6
+  hosts: all
+  roles:
+    - CIS_3.6
+  become: yes
+  tags:
+    - CIS_3.6
+
+- name: Apply CIS 3.7
+  hosts: all
+  roles:
+    - CIS_3.7
+  become: yes
+  tags:
+    - CIS_3.7

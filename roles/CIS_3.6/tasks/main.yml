@@ -1,0 +1,45 @@
+---
+# This playbook contains Ubuntu 18.04LTS CIS benchmark v1.0.0 settings
+
+- name: 3.6.1 - Install iptables
+  apt:
+    name: iptables, iptables-persistent
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  tags:
+    - CIS_3.6.1
+  notify:
+    - Reboot host
+
+# iptables config needs some more attention for each individual VM
+
+#- name: 3.6.1, 3.6.2, 3.6.3, 3.6.4 - Basic iptables IPv4
+#  template:
+#    src: etc_iptables_rules.v4.j2
+#    dest: /etc/iptables/rules.v4
+#    owner: root
+#    group: root
+#    mode: '0644'
+#  tags:
+#    - CIS_3.6.1
+#  notify:
+#    - Reboot host
+#    - persist iptables
+#
+#- name: 3.6.5 - Firewall rules for existing open ports
+#  iptables:
+#    chain: INPUT
+##    protocol: tcp
+##    destination_port: 22
+#    ctstate: NEW
+#    syn: match
+#    jump: ACCEPT
+##    comment: Accept new SSH connections.
+#
+## iptables -L INPUT -v -n
+
+
+
+
+

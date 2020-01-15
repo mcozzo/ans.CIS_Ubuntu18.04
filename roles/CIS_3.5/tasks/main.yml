@@ -1,0 +1,66 @@
+---
+# This playbook contains Ubuntu 18.04LTS CIS benchmark v1.0.0 settings
+
+- name: 3.5.1 - Disable DCCP
+  lineinfile:
+    dest: /etc/modprobe.d/dccp.conf
+    state: present
+    backup: yes
+    create: yes
+    owner: root
+    group: root
+    mode: 0644
+    regexp: 'install dccp \/bin\/true'
+    line: 'install dccp /bin/true'
+  tags:
+    - CIS_3.5.1
+  notify:
+    - Reboot host
+
+- name: 3.5.2 - Disable SCTP
+  lineinfile:
+    dest: /etc/modprobe.d/sctp.conf
+    state: present
+    backup: yes
+    create: yes
+    owner: root
+    group: root
+    mode: 0644
+    regexp: 'install sctp \/bin\/true'
+    line: 'install sctp /bin/true'
+  tags:
+    - CIS_3.5.2
+  notify:
+    - Reboot host
+
+- name: 3.5.3 - Disable RDS
+  lineinfile:
+    dest: /etc/modprobe.d/rds.conf
+    state: present
+    backup: yes
+    create: yes
+    owner: root
+    group: root
+    mode: 0644
+    regexp: 'install rds \/bin\/true'
+    line: 'install rds /bin/true'
+  tags:
+    - CIS_3.5.3
+  notify:
+    - Reboot host
+
+- name: 3.5.4 - Disable TIPC
+  lineinfile:
+    dest: /etc/modprobe.d/tipc.conf
+    state: present
+    backup: yes
+    create: yes
+    owner: root
+    group: root
+    mode: 0644
+    regexp: 'install tipc \/bin\/true'
+    line: 'install tipc /bin/true'
+  tags:
+    - CIS_3.5.4
+  notify:
+    - Reboot host

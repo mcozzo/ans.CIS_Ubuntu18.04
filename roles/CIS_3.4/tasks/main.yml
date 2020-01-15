@@ -1,0 +1,43 @@
+---
+# This playbook contains Ubuntu 18.04LTS CIS benchmark v1.0.0 settings
+
+- name: 3.4.1 - Install TCP Wrappers
+  apt:
+    name: tcpd
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  tags:
+    - CIS_3.4.1
+  notify:
+    - Reboot host
+
+# Another option is to use lineinfile
+# https://docs.ansible.com/ansible/latest/modules/lineinfile_module.html
+- name: 3.4.2, 3.4.4 - Update /etc/hosts.allow
+  template:
+    src: hosts.allow.j2
+    dest: /etc/hosts.allow
+    owner: root
+    group: root
+    mode: '0644'
+  tags:
+    - CIS_3.4.2
+    - CIS_3.4.4
+  notify:
+    - Reboot host
+
+# Another option is to use lineinfile
+# https://docs.ansible.com/ansible/latest/modules/lineinfile_module.html
+- name: 3.4.3, 3.4.5 - Update /etc/hosts.deny
+  template:
+    src: hosts.deny.j2
+    dest: /etc/hosts.deny
+    owner: root
+    group: root
+    mode: '0644'
+  tags:
+    - CIS_3.4.3
+    - CIS_3.4.5
+  notify:
+    - Reboot host
