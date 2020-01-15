@@ -7,4 +7,9 @@
     state: absent
   tags:
     - services
+    - CIS_2.3.1
+    - CIS_2.3.2
+    - CIS_2.3.3
+    - CIS_2.3.4
+    - CIS_2.3.5
 

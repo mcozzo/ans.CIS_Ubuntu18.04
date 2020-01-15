@@ -6,10 +6,14 @@
   apt_key:
     url: https://ftp-master.debian.org/keys/archive-key-10.asc
     state: present
+  tags:
+    - apt
+    - CIS_1.2.2
 
 - name: 1.2.1 - Update apt
   apt:
     update_cache: yes
   tags:
     - apt
+    - CIS_1.2.1
 

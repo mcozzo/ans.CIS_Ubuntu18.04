@@ -10,6 +10,7 @@
     backup: yes
   tags:
     - SELinux
+    - CIS_1.6.1
 #  notify:
 #    - Reboot host
 #    - Update Grub2 config file ubuntu
@@ -23,6 +24,7 @@
     backup: yes
   tags:
     - SELinux
+    - CIS_1.6.1
 #  notify:
 #    - Reboot host
 #    - Update Grub2 config file ubuntu

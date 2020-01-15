@@ -1,54 +1,45 @@
 ---
 # This playbook contains Ubuntu 18.04LTS CIS benchmark v1.0.0 settings
 
-# Also 1.7.1.4 /etc/motd = 0644,
-- name: 1.7.1.1,1.7.1.4 - Set MOTD, root:root, 0644
-  template:
-    src: etc_motd.j2
-    dest: /etc/motd
-    mode: '0644'
-    owner: root
-    group: root
-  tags:
-    - banner
-
-- name: 1.7.1.2 - Scrub logon banner of "\m, \r, \s, \v"
+- name: 1.6.1 - Force SE Linux. Remove "selinux=0"
   replace:
-    path: /etc/issue
+    path: /etc/motd
 #    state: absent
-    regexp: '(?i)\\[mrsv]'
+    regexp: '(?i)selinux=0'
     replace: ""
     backup: yes
   tags:
-    - banner
+    - SELinux
+    - CIS_1.6.1
+#  notify:
+#    - Reboot host
+#    - Update Grub2 config file ubuntu
 
-- name: 1.7.1.3 - Scrub remote logon banner of "\m, \r, \s, \v"
+- name: 1.6.1 - Force SE Linux. Remove "enforcing=0"
   replace:
-    path: /etc/issue.net
+    path: /etc/default/grub
 #    state: absent
-    regexp: '(?i)\\[mrsv]'
+    regexp: '(?i)enforcing=0'
     replace: ""
     backup: yes
   tags:
-    - banner
+    - SELinux
+    - CIS_1.6.1
+#  notify:
+#    - Reboot host
+#    - Update Grub2 config file ubuntu
 
-- name: 1.7.1.5 - Settings for /etc/issue, root:root, 0644
-  file:
-    path: /etc/issue
-    mode: '0644'
-    owner: root
-    group: root
-  tags:
-    - banner
-
-- name: 1.7.1.6 - Settings for /etc/issue.net, root:root, 0644
-  file:
-    path: /etc/issue
-    mode: '0644'
-    owner: root
-    group: root
-  tags:
-    - banner
-
-# 1.7.2 - GNOME / GDM shouldn't be installed on servers, therefore no need to provide GDM banner
-
+# L2 setting
+# There isn't a /etc/selinux/config file. Just /etc/selinux/semanage.conf
+#- name: 1.6.1.2 - Force SElinux
+#  replace:
+#    path: /etc/default/grub
+##    state: absent
+#    regexp: '(?i)selinux=0'
+#    replace: ""
+#    backup: yes
+#  tags:
+#    - SELinux
+##  notify:
+##    - Reboot host
+##    - Update Grub2 config file ubuntu

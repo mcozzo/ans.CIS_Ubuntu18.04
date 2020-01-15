@@ -11,6 +11,8 @@
     create: yes
   tags:
     - filesystem
+    - CIS_1.1.1
+    - CIS_1.1.1.1
   notify:
     - Reboot host
 
@@ -20,6 +22,8 @@
     state: absent
   tags:
     - filesystem
+    - CIS_1.1.1
+    - CIS_1.1.1.1
   notify:
     - Reboot host
 
@@ -33,6 +37,8 @@
     create: yes
   tags:
     - filesystem
+    - CIS_1.1.1
+    - CIS_1.1.1.2
   notify:
     - Reboot host
 
@@ -42,6 +48,8 @@
     state: absent
   tags:
     - filesystem
+    - CIS_1.1.1
+    - CIS_1.1.1.2
   notify:
     - Reboot host
 
@@ -55,6 +63,8 @@
     create: yes
   tags:
     - filesystem
+    - CIS_1.1.1
+    - CIS_1.1.1.3
   notify:
     - Reboot host
 
@@ -64,6 +74,8 @@
     state: absent
   tags:
     - filesystem
+    - CIS_1.1.1
+    - CIS_1.1.1.3
   notify:
     - Reboot host
 
@@ -77,6 +89,8 @@
     create: yes
   tags:
     - filesystem
+    - CIS_1.1.1
+    - CIS_1.1.1.4
   notify:
     - Reboot host
 
@@ -86,6 +100,8 @@
     state: absent
   tags:
     - filesystem
+    - CIS_1.1.1
+    - CIS_1.1.1.4
   notify:
     - Reboot host
 
@@ -99,6 +115,8 @@
     create: yes
   tags:
     - filesystem
+    - CIS_1.1.1
+    - CIS_1.1.1.5
   notify:
     - Reboot host
 
@@ -108,6 +126,8 @@
     state: absent
   tags:
     - filesystem
+    - CIS_1.1.1
+    - CIS_1.1.1.5
   notify:
     - Reboot host
 
@@ -121,6 +141,8 @@
     create: yes
   tags:
     - filesystem
+    - CIS_1.1.1
+    - CIS_1.1.1.6
   notify:
     - Reboot host
 
@@ -130,88 +152,7 @@
     state: absent
   tags:
     - filesystem
+    - CIS_1.1.1
+    - CIS_1.1.1.6
   notify:
     - Reboot host
-
-# Unceremoniously rip /tmp config from fstab
-- name: 1.1.2 - No /tmp directory in /etc/fstab
-  lineinfile:
-    path: /etc/fstab
-    regexp: '/tmp'
-    state: absent
-    backup: yes
-    create: no
-  tags:
-    - filesystem
-  notify:
-    - Reboot host
-
-# 1.1.3 nodev option set on /tmp in /etc/fstab
-# 1.1.4 nosuid option set on /tmp in /etc/fstab
-# no need, because we arn't allowing /tmp to exist
-
-# Unceremoniously rip /var config from fstab
-- name: 1.1.5 & 1.1.6 - No /var directory in /etc/fstab
-  lineinfile:
-    path: /etc/fstab
-    regexp: '/var'
-    state: absent
-    backup: yes
-    create: no
-  tags:
-    - filesystem
-  notify:
-    - Reboot host
-
-# 1.1.7 nodev option set on /tmp in /etc/fstab
-# 1.1.8 nosuid option set on /tmp in /etc/fstab
-# no need, because we arn't allowing /tmp to exist
-
-# Unceremoniously rip /var config from fstab
-- name: 1.1.10 & 1.1.11 - No /var/log directory in /etc/fstab
-  lineinfile:
-    path: /etc/fstab
-    regexp: '/var'
-    state: absent
-    backup: yes
-    create: no
-  tags:
-    - filesystem
-  notify:
-    - Reboot host
-
-# 1.1.12 Separate partition for /home Need a solution
-#- name: 1.1.12  - No /var/log directory in /etc/fstab
-#  lineinfile:
-#    path: /etc/fstab
-#    regexp: '/var'
-#    state: absent
-#    backup: yes
-#    create: no
-#  notify:
-#    - Reboot host
-
-# Actually all of the 1.1.X file system level stuff needs to be addressed on a per host basis
-
-- name: 1.1.21 - Un-install autofs (Automount of devices)
-  apt:
-    name: autofs
-    state: absent
-#    update_cache: yes
-  tags:
-    - filesystem
-  notify:
-    - Reboot host
-
-#- name: 1.1.2.1 - Disable autofs (Automount of devices)
-#  systemd:
-#    name: autofs
-#    enabled: no
-#    state: stopped
-#  notify:
-#    - Reboot host
-#  tags:
-#    - filesystem
-
-
-

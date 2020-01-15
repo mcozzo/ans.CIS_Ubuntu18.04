@@ -10,6 +10,7 @@
     line: 'net.ipv4.ip_forward = 0'
   tags:
     - packet redirect
+    - CIS_3.1.1
   notify:
     - Reboot host
 
@@ -22,6 +23,7 @@
     line: 'net.ipv4.conf.all.send_redirects = 0'
   tags:
     - packet redirect
+    - CIS_3.1.2
   notify:
     - Reboot host
 
@@ -35,5 +37,6 @@
     line: 'net.ipv4.conf.default.send_redirects = 0'
   tags:
     - packet redirect
+    - CIS_3.1.2
   notify:
     - Reboot host

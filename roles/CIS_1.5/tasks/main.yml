@@ -10,6 +10,7 @@
     insertbefore: 'End of file'
   tags:
     - process hardening
+    - CIS_1.5.1
   notify:
     - Reboot host
 
@@ -21,6 +22,7 @@
     line: 'fs.suid_dumpable = 0'
   tags:
     - process hardening
+    - CIS_1.5.1
   notify:
     - Reboot host
 # Evaluate adding "sysctl -p" to crontab based on this bug
@@ -38,6 +40,7 @@
     line: 'kernel.randomize_va_space = 2'
   tags:
     - process hardening
+    - CIS_1.5.3
   notify:
     - Reboot host
 
@@ -49,5 +52,6 @@
 #    update_cache: yes
   tags:
     - process hardening
+    - CIS_1.5.4
 
 

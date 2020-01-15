@@ -1,0 +1,69 @@
+---
+# This playbook contains Ubuntu 18.04LTS CIS benchmark v1.0.0 settings
+
+- name: 3.3.1 - Do not accept IPv6 route advertisements 'net.ipv6.conf.all.accept_ra = 0'
+  lineinfile:
+    dest: /etc/sysctl.conf
+    state: present
+    backup: yes
+    regexp: 'net\.ipv6\.conf\.all\.accept\_ra'
+    line: 'net.ipv6.conf.all.accept_ra = 0'
+  tags:
+    - packet redirect
+    - CIS_3.3.1
+  notify:
+    - Reboot host
+
+- name: 3.3.1 - Do not accept IPv6 route advertisements 'net.ipv6.conf.default.accept_ra = 0'
+  lineinfile:
+    dest: /etc/sysctl.conf
+    state: present
+    backup: yes
+    regexp: 'net\.ipv6\.conf\.default\.accept\_ra'
+    insertafter: 'net\.ipv6\.conf\.all\.accept\_ra'
+    line: 'net.ipv6.conf.default.accept_ra = 0'
+  tags:
+    - packet redirect
+    - CIS_3.3.1
+  notify:
+    - Reboot host
+
+- name: 3.3.2 - Do not accept IPv6 redirects 'net.ipv6.conf.all.accept_redirects = 0'
+  lineinfile:
+    dest: /etc/sysctl.conf
+    state: present
+    backup: yes
+    regexp: 'net\.ipv6\.conf\.all\.accept\_redirects'
+    line: 'net.ipv6.conf.all.accept_redirects = 0'
+  tags:
+    - packet redirect
+    - CIS_3.3.2
+  notify:
+    - Reboot host
+
+- name: 3.3.2 - Do not accept IPv6 redirects 'net.ipv6.conf.all.accept_redirects = 0'
+  lineinfile:
+    dest: /etc/sysctl.conf
+    state: present
+    backup: yes
+    regexp: 'net\.ipv6\.conf\.default\.accept\_redirects'
+    insertafter: 'net\.ipv6\.conf\.all\.accept\_redirects'
+    line: 'net.ipv6.conf.default.accept_redirects = 0'
+  tags:
+    - packet redirect
+    - CIS_3.3.2
+  notify:
+    - Reboot host
+
+- name: 3.3.3 - Do not accept secure ICMP redirects 'net.ipv4.conf.all.secure_redirects = 0'
+  lineinfile:
+    dest: /etc/default/grub
+    state: present
+    backup: yes
+    regexp: 'GRUB\_CMDLINE\_LINUX'
+    line: 'GRUB_CMDLINE_LINUX="ipv6.disable=1"'
+  tags:
+    - packet redirect
+    - CIS_3.3.3
+  notify:
+    - Reboot host

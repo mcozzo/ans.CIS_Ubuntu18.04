@@ -16,3 +16,11 @@
   become: yes
   tags:
     - CIS_3.2
+
+- name: Apply CIS 3.3
+  hosts: all
+  roles:
+    - CIS_3.3
+  become: yes
+  tags:
+    - CIS_3.3

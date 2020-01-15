@@ -10,38 +10,33 @@
     mode: '0400'
   tags:
     - boot
+    - CIS_1.4.1
   notify:
     - Reboot host
 
-# From an ubuntu box run the following
-# grub-mkpasswd-pbkdf2
-# update the etc_grub.d_40_custom file in the template folder for this role
-# default credentials
-# UN: root
-# PW: P@ssw0rd
 - name: 1.4.2 - Set grub password file
   template:
-    src: etc_grub.d_40_custom.j2
+    src: etc_grub.d_40_custom
     dest: /etc/grub.d/40_custom
     mode: '0755'
   tags:
     - boot
+    - CIS_1.4.2
   notify:
     - Update Grub2 config file ubuntu
-    - Reboot host
 
-# Allow system to auto boot
-- name: 1.4.2 - Set grub menu entry --unrestricted
-  lineinfile:
-    dest: /etc/grub.d/10_linux
-    state: present
-    regexp: ^CLASS="--class gnu-linux --class gnu --class os"
-    line: CLASS="--class gnu-linux --class gnu --class os --unrestricted"
-  tags:
-    - boot
-  notify:
-    - Reboot host
-    - Update Grub2 config file ubuntu
-
-#- name: 1.4.3 - Set root password
-#  user: name=root password="{{ UBUNTU_COMMON_ROOT_PASSWORD }}"
+#- name: 1.4.2 - Set grub menu entry --unrestricted
+#  lineinfile:
+#    dest: /etc/grub.d/10_linux
+#    state: present
+#    regexp: ^CLASS="--class gnu-linux --class gnu --class os"
+#    line: CLASS="--class gnu-linux --class gnu --class os --unrestricted"
+##    regexp: '\"menuentry .\$\(echo .\$title. \| grub_quote\). \${CLASS}'
+##    line: '\1 --unrestricted\2'
+##    validate: visudo -cf %s
+#  tags:
+#    - boot
+#    - CIS_1.4.2
+#  notify:
+##    - Reboot host
+#    - Update Grub2 config file ubuntu
