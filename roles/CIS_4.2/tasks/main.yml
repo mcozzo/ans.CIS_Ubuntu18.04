@@ -23,7 +23,6 @@
   notify:
     - Restart rsyslog
 
-
 - name: 4.2.1.2 - Configure rsyslog logging
   template:
     src: etc_rsyslog.d_60-default.conf.j2
