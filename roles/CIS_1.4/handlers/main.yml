@@ -9,9 +9,4 @@
 - name: Reboot host
   reboot:
 
-- name: restart ssh
-  systemd:
-    name: sshd
-    state: restarted
-    enabled: yes
 

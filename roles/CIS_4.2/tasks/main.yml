@@ -1,0 +1,82 @@
+---
+# This playbook contains Ubuntu 18.04LTS CIS benchmark v1.0.0 settings
+
+- name: 4.2 - Check for rsyslog config file
+  stat: path=/etc/rsyslog.conf
+  register: rsyslog_conf
+  tags:
+    - iptables
+    - CIS_4.2
+    - CIS_4.2.1
+    - CIS_4.2.1.2
+
+- name: 4.2.1.1 - Install rsyslog, enable service
+  apt:
+    name: rsyslog
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  tags:
+    - CIS_4.2
+    - CIS_4.2.1
+    - CIS_4.2.1.1
+  notify:
+    - Restart rsyslog
+
+
+- name: 4.2.1.2 - Configure rsyslog logging
+  template:
+    src: etc_rsyslog.d_60-default.conf.j2
+    dest: /etc/rsyslog.d/60-default.conf
+    backup: yes
+    owner: root
+    group: root
+    mode: 0640
+  when: rsyslog_conf.stat.exists
+  tags:
+    - CIS_4.2.1
+    - CIS_4.2.1.2
+  notify:
+    - Restart rsyslog
+    - Reboot host
+
+# Configure remote host
+- name: 4.2.1.3, 4.2.1.4 - Set default syslog mode '0640' & Send to remote host
+  lineinfile:
+    dest: /etc/rsyslog.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+    backup: yes
+  with_items:
+    - { regexp: '\$FileCreateMode',
+      line: '$FileCreateMode 0640' }
+    - { regexp: '\*\.\* \@\@',
+      line: '*.* @@{{ LOGGING_HOST }}' }
+  when: rsyslog_conf.stat.exists
+  tags:
+    - CIS_4.2.1
+    - CIS_4.2.1.3
+  notify:
+    - Restart rsyslog
+    - Reboot host
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

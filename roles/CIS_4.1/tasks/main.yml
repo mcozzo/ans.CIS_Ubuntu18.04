@@ -2,29 +2,180 @@
 # This playbook contains Ubuntu 18.04LTS CIS benchmark v1.0.0 settings
 
 # Disabling Wireless is not relevant for VMs
-- name: 4.1.1.1 - Set log file size
+- name: 4.1, 4.1.2 - Install auditd, enable service
   apt:
-    name: aide, aide-common
+    name: auditd
     state: present
     update_cache: yes
     cache_valid_time: 3600
   tags:
+    - CIS_4.1
     - CIS_4.1.1
     - CIS_4.1.1.1
+    - CIS_4.1.1.2
+    - CIS_4.1.1.3
+    - CIS_4.1.2
+  notify:
+    - Restart auditd
 
+- name: 4.1 - Check for auditd config file
+  stat: path=/etc/audit/auditd.conf
+  register: auditd_conf
+  tags:
+    - iptables
+    - CIS_4.1
+    - CIS_4.1.1
+    - CIS_4.1.1.1
+    - CIS_4.1.2
 
-- name: 4.1.1.1 - Set log file size
+- name: 4.1.1.1 - Set auditd log file size
   lineinfile:
     dest: /etc/audit/auditd.conf
     state: present
     backup: yes
     create: yes
-    owner: root
-    group: root
-    mode: 0644
-    regexp: 'install sctp \/bin\/true'
-    line: 'install sctp /bin/true'
+#    owner: root
+#    group: root
+#    mode: 0644
+    regexp: 'max\_log\_file'
+    line: 'max_log_file = 512'
+  when: auditd_conf.stat.exists
   tags:
-    - CIS_3.5.2
+    - CIS_4.1.1
+    - CIS_4.1.1.1
   notify:
+    - Restart auditd
     - Reboot host
+
+- name: 4.1.1.2 - auditd disable system when logs full "space_left_action = email"
+  lineinfile:
+    dest: /etc/audit/auditd.conf
+    state: present
+    backup: yes
+    create: yes
+#    owner: root
+#    group: root
+#    mode: 0644
+    regexp: 'space\_left\_action'
+    line: 'space_left_action = email'
+  when: auditd_conf.stat.exists
+  tags:
+    - CIS_4.1.1
+    - CIS_4.1.1.2
+  notify:
+    - Restart auditd
+    - Reboot host
+
+- name: 4.1.1.2 - auditd disable system when logs full "action_mail_acct = root"
+  lineinfile:
+    dest: /etc/audit/auditd.conf
+    state: present
+    backup: yes
+    create: yes
+#    owner: root
+#    group: root
+#    mode: 0644
+    regexp: 'action\_mail\_acct'
+    line: 'action_mail_acct = root'
+  when: auditd_conf.stat.exists
+  tags:
+    - CIS_4.1.1
+    - CIS_4.1.1.2
+  notify:
+    - Restart auditd
+    - Reboot host
+
+- name: 4.1.1.2 - auditd disable system when logs full "space_left_action = email"
+  lineinfile:
+    dest: /etc/audit/auditd.conf
+    state: present
+    backup: yes
+    create: yes
+#    owner: root
+#    group: root
+#    mode: 0644
+    regexp: 'space\_left\_action'
+    line: 'space_left_action = email'
+  when: auditd_conf.stat.exists
+  tags:
+    - CIS_4.1.1
+    - CIS_4.1.1.2
+  notify:
+    - Restart auditd
+    - Reboot host
+
+- name: 4.1.1.3 - auditd do not delete logs "max_log_file_action = keep_logs"
+  lineinfile:
+    dest: /etc/audit/auditd.conf
+    state: present
+    backup: yes
+    create: yes
+#    owner: root
+#    group: root
+#    mode: 0644
+    regexp: 'max\_log\_file\_action'
+    line: 'max_log_file_action = keep_logs'
+  when: auditd_conf.stat.exists
+  tags:
+    - CIS_4.1.1
+    - CIS_4.1.1.3
+  notify:
+    - Restart auditd
+    - Reboot host
+
+## Skipping because L2
+## Complicated to add "audit=1" to grub, because we are setting values in the same variable in a previous play
+#- name: 4.1.3 - Audit processes that start before auditd
+#  replace:
+#    path: /etc/default/grub
+#    regexp: 'GRUB\_CMDLINE\_LINUX'
+#    replace: "audit=1"
+#    backup: yes
+#  tags:
+#    - SELinux
+#    - CIS_4.1.3
+#  notify:
+#    - Reboot host
+#    - Update Grub2 config file ubuntu
+
+- name: "Allow /srv folder accessed by default. Comment out the lines to allow. "
+  lineinfile:
+    dest: /etc/audit/audit.rules
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+    backup: yes
+  with_items:
+    - { regexp: '\-a always\,exit \-F arch\=b64 \-S adjtimex \-S settimeofday \-k time\-change',
+      line: '-a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time-change' }
+    - { regexp: '\-a always\,exit \-F arch\=b32 \-S adjtimex \-S settimeofday \-S stime \-k time\-change',
+      line: '-a always,exit -F arch=b32 -S adjtimex -S settimeofday -S stime -k time-change' }
+    - { regexp: '\-a always\,exit \-F arch\=b64 \-S clock\_settime \-k time\-change',
+      line: '-a always,exit -F arch=b64 -S clock_settime -k time-change' }
+    - { regexp: '\-a always\,exit \-F arch\=b32 \-S clock\_settime \-k time\-change',
+      line: '-a always,exit -F arch=b32 -S clock_settime -k time-change' }
+    - { regexp: '\-w \/etc\/localtime \-p wa \-k time\-change',
+      line: '-w /etc/localtime -p wa -k time-change' }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

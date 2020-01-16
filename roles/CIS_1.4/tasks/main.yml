@@ -12,31 +12,21 @@
     - boot
     - CIS_1.4.1
   notify:
-    - Reboot host
+    - Update Grub2 config file ubuntu
+#    - Reboot host
 
 - name: 1.4.2 - Set grub password file
   template:
-    src: etc_grub.d_40_custom
-    dest: /etc/grub.d/40_custom
+    src: etc_grub.d_50_custom.j2
+    dest: /etc/grub.d/50_custom
     mode: '0755'
   tags:
     - boot
     - CIS_1.4.2
   notify:
     - Update Grub2 config file ubuntu
+#    - Reboot host
 
-#- name: 1.4.2 - Set grub menu entry --unrestricted
-#  lineinfile:
-#    dest: /etc/grub.d/10_linux
-#    state: present
-#    regexp: ^CLASS="--class gnu-linux --class gnu --class os"
-#    line: CLASS="--class gnu-linux --class gnu --class os --unrestricted"
-##    regexp: '\"menuentry .\$\(echo .\$title. \| grub_quote\). \${CLASS}'
-##    line: '\1 --unrestricted\2'
-##    validate: visudo -cf %s
+#- name: 1.4.3 - Set a password for the root user
 #  tags:
-#    - boot
-#    - CIS_1.4.2
-#  notify:
-##    - Reboot host
-#    - Update Grub2 config file ubuntu
+#    - CIS_1.4.3

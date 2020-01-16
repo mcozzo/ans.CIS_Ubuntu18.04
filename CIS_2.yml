@@ -1,5 +1,5 @@
 ---
-# This playbook is for my stuff
+# This playbook for CIS Ubuntu 18.04 hardening
 
 - name: Apply CIS 2.1
   hosts: all

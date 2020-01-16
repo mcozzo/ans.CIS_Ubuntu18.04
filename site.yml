@@ -23,6 +23,11 @@
   tags:
     - CIS_3
 
+- name: CIS 4
+  import_playbook: CIS_4.yml
+  tags:
+    - CIS_4
+
 
 #  vars:
 #    - ansible_python_interpreter: /usr/bin/python3

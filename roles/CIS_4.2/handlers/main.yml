@@ -3,14 +3,11 @@
 
 #handlers:
 
-- name: Restart auditd
+- name: Restart rsyslog
   systemd:
-    name: auditd
+    name: rsyslog
     state: restarted
     enabled: yes
-
-- name: Update Grub2 config file ubuntu
-  shell: /usr/sbin/update-grub
 
 - name: Reboot host
   reboot:
