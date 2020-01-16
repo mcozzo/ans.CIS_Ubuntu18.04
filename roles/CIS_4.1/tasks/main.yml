@@ -3,8 +3,19 @@
 
 # Disabling Wireless is not relevant for VMs
 - name: 4.1.1.1 - Set log file size
+  apt:
+    name: aide, aide-common
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  tags:
+    - CIS_4.1.1
+    - CIS_4.1.1.1
+
+
+- name: 4.1.1.1 - Set log file size
   lineinfile:
-    dest: /etc/modprobe.d/sctp.conf
+    dest: /etc/audit/auditd.conf
     state: present
     backup: yes
     create: yes
