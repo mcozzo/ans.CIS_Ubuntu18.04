@@ -27,8 +27,17 @@ https://docs.microsoft.com/en-us/windows/wsl/install-manual <br>
 https://docs.microsoft.com/en-us/windows/wsl/initialize-distro <br>
 
 ### Pulling config from git
-From inside your WSL linux edition
-
+From inside your WSL linux edition. <br>
+Update linux
 ```bash
-
+sudo apt-get update
+sudo apt-get upgrade
+```
+Create a folder, initialize git, pull the repo
+```bash
+mkdir ~/git
+mkdir ~/git/ans.CIS_Ubuntu18.04
+cd ~/git/ans.CIS_Ubuntu18.04
+git init
+git@github.com:mcozzo/ans.CIS_Ubuntu18.04.git
 ```
