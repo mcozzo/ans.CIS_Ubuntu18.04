@@ -9,7 +9,6 @@
     state: restart
     enabled: yes
 
-
 - name: Reboot host
   reboot:
 
