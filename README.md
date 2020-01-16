@@ -14,6 +14,7 @@ From inside your WSL linux edition.
 ```bash
 sudo apt-get update
 sudo apt-get upgrade
+sudo apt-get install ansible
 ```
 
 ### Pulling config from git
@@ -23,7 +24,7 @@ mkdir ~/git
 mkdir ~/git/ans.CIS_Ubuntu18.04
 cd ~/git/ans.CIS_Ubuntu18.04
 git init
-git@github.com:mcozzo/ans.CIS_Ubuntu18.04.git
+git pull https://github.com/mcozzo/ans.CIS_Ubuntu18.04.git
 ```
 
 ### To run plays 
