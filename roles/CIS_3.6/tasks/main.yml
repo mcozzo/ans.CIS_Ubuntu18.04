@@ -8,11 +8,55 @@
     update_cache: yes
     cache_valid_time: 3600
   tags:
+    - iptables
     - CIS_3.6.1
   notify:
     - Reboot host
 
 # iptables config needs some more attention for each individual VM
+
+- name: 3.6.1 - Check default iptables v4 config
+  stat: path=/etc/iptables/rules.v4
+  register: iptablesv4
+  tags:
+    - iptables
+    - CIS_3.6.1
+
+- name: 3.6.1 - Place default iptables v4 config file
+  template:
+    src: etc_iptables_rules.v4.j2
+    dest: /etc/iptables/rules.v4
+    owner: root
+    group: root
+    mode: '0644'
+  when: iptablesv4.stat.exists == False
+  tags:
+    - iptables
+    - CIS_3.6.1
+  notify:
+    - Reboot host
+
+- name: 3.6.1 - Check default iptables v6 config
+  stat: path=/etc/iptables/rules.v6
+  register: iptablesv6
+  tags:
+    - iptables
+    - CIS_3.6.1
+
+- name: 3.6.1 - Place default iptables v6 config file
+  template:
+    src: etc_iptables_rules.v6.j2
+    dest: /etc/iptables/rules.v6
+    owner: root
+    group: root
+    mode: '0644'
+  when: iptablesv6.stat.exists == False
+  tags:
+    - iptables
+    - CIS_3.6.1
+  notify:
+    - Reboot host
+
 
 #- name: 3.6.1, 3.6.2, 3.6.3, 3.6.4 - Basic iptables IPv4
 #  template:
