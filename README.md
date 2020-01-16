@@ -21,7 +21,14 @@ git push -u origin master
 ## Grub password 
 Section 1.4 Please follow the directions and update the password for the GRUB template file
 
-## Setting up WSL & linux 
-https://docs.microsoft.com/en-us/windows/wsl/install-on-server
-https://docs.microsoft.com/en-us/windows/wsl/install-manual
-https://docs.microsoft.com/en-us/windows/wsl/initialize-distro
+### Setting up WSL & linux 
+https://docs.microsoft.com/en-us/windows/wsl/install-on-server <br>
+https://docs.microsoft.com/en-us/windows/wsl/install-manual <br> 
+https://docs.microsoft.com/en-us/windows/wsl/initialize-distro <br>
+
+### Pulling config from git
+From inside your WSL linux edition
+
+```bash
+
+```
