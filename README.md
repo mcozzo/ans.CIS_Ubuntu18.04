@@ -31,14 +31,17 @@ git pull https://github.com/mcozzo/ans.CIS_Ubuntu18.04.git
 ### To run plays 
 ```bash
 # Run against test
-ansible-playbook -i test site.yml
+ansible-playbook -i site-test.yml site-play.yml
 # Run against prod
-ansible-playbook -i prod site.yml
+ansible-playbook -i site-prod.yml site-play.yml
+# Run service account creation
+ansible-playbook -i site-test.yml site-play.yml --tags user -e "ansible_ssh_user=mattcozzolino" --ask-pass
 ```
 If you only want to run specific plays
 ```bash
-ansible-playbook -i test site.yml --tags <tag>
-ansible-playbook -i test site.yml --tags CIS_1,CIS_2.1
+ansible-playbook -i site-test.yml site-play.yml --tags <tag>
+# E.G.
+ansible-playbook -i site-test.yml site-play.yml --tags CIS_1,CIS_2.1
 ```
 
 ## Commit changes / backup config

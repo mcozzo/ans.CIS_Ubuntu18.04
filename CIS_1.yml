@@ -5,7 +5,6 @@
   hosts: all
   roles:
     - CIS_1.1
-  become: yes
   tags:
     - CIS_1.1
 
@@ -13,7 +12,6 @@
   hosts: all
   roles:
     - CIS_1.2
-  become: yes
   tags:
     - CIS_1.2
 
@@ -21,7 +19,6 @@
   hosts: all
   roles:
     - CIS_1.3
-  become: yes
   tags:
     - CIS_1.3
 
@@ -29,7 +26,6 @@
   hosts: all
   roles:
     - CIS_1.4
-  become: yes
   tags:
     - CIS_1.4
 
@@ -37,7 +33,6 @@
   hosts: all
   roles:
     - CIS_1.5
-  become: yes
   tags:
     - CIS_1.5
 
@@ -45,7 +40,6 @@
   hosts: all
   roles:
     - CIS_1.6
-  become: yes
   tags:
     - CIS_1.6
 
@@ -53,7 +47,6 @@
   hosts: all
   roles:
     - CIS_1.7
-  become: yes
   tags:
     - CIS_1.7
 
@@ -61,7 +54,6 @@
   hosts: all
   roles:
     - CIS_1.8
-  become: yes
   tags:
     - CIS_1.8
 

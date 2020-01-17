@@ -1,6 +1,10 @@
 ---
 # Global variables
 
+# User variables
+# SSH_USER: ansible-svc
+SSH_PUBKEY: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCwQQ1Srbtbs5snd6/QuY7BgJA4CSK+FDCBdmnH9zv2h2RGZCzTP4rTgMS42JRRHdACtETzSLis+HU2Vi9jCW1lS4aamH6u6St514Xih3m8KLa0y0DIzX8lxO3XTpoVxJgqXXk83LeBu5UbyPIxfARJPQbGMY2c3bYVt/Mq1Xl6zis682by9ROIinGAnObrGDgg04O1bC1K53uvt12NrTnqN4FFFBiT3sDv2Rx/g5obTiLGScFzgPlMvxQhvPN2od5OgqBj5NybOMgMfqKUqed6yM2p4tJNMPK1aFT385Pfvxl1woY0G0ghiFvy0mbeKF5omyVSYECcXlDJHVposleR mattcozzolino@Galactica.local
+
 # CIS_1.4
 # Grub config
 # Generate PW: https://help.ubuntu.com/community/Grub2/Passwords

@@ -1,0 +1,45 @@
+---
+# This playbook is for my stuff
+
+# - ansible_python_interpreter: /usr/bin/python3
+
+- name: Common Configs
+  import_playbook: common.yml
+  tags:
+    - common
+
+- name: CIS 1
+  import_playbook: CIS_1.yml
+  tags:
+    - CIS_1
+  become: yes
+#  become_user: "{{ SSH_USER }}"
+
+
+- name: CIS 2
+  import_playbook: CIS_2.yml
+  tags:
+    - CIS_2
+  become: yes
+  become_user: "{{ SSH_USER }}"
+
+- name: CIS 3
+  import_playbook: CIS_3.yml
+  tags:
+    - CIS_3
+  become: yes
+  become_user: "{{ SSH_USER }}"
+
+- name: CIS 4
+  import_playbook: CIS_4.yml
+  tags:
+    - CIS_4
+  become: yes
+  become_user: "{{ SSH_USER }}"
+
+- name: CIS 5
+  import_playbook: CIS_5.yml
+  tags:
+    - CIS_5
+  become: yes
+  become_user: "{{ SSH_USER }}"

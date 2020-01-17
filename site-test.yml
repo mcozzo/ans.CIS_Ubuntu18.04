@@ -1,0 +1,12 @@
+all:
+  hosts:
+    10.11.14.51:
+  vars:
+    ansible_connection: ssh
+    ansible_user: ansible-svc
+    ansible_python_interpreter: /usr/bin/python3
+#    ansible_ssh_pass=vagrant
+
+    dns_servers:
+      - 10.11.12.11
+      - 10.11.12.12
