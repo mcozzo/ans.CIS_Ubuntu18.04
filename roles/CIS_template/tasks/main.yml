@@ -1,0 +1,10 @@
+---
+# This playbook contains Ubuntu 18.04LTS CIS benchmark v1.0.0 settings
+
+#- name: 4.3 - Check log rotate
+#  stat: path=/etc/logrotate.conf
+#  register: logrotate
+#  tags:
+#    - CIS_4.3
+#    - CIS_4.3.1
+

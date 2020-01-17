@@ -25,8 +25,18 @@
     - CIS_1.4.2
   notify:
     - Update Grub2 config file ubuntu
-#    - Reboot host
+    - Reboot host
 
-#- name: 1.4.3 - Set a password for the root user
-#  tags:
-#    - CIS_1.4.3
+# Allow system to auto boot
+- name: 1.4.2 - Set grub menu entry --unrestricted
+  lineinfile:
+    dest: /etc/grub.d/10_linux
+    state: present
+    regexp: ^CLASS="--class gnu-linux --class gnu --class os"
+    line: CLASS="--class gnu-linux --class gnu --class os --unrestricted"
+  tags:
+    - boot
+  notify:
+    - Reboot host
+    - Update Grub2 config file ubuntu
+

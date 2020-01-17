@@ -48,3 +48,5 @@ git commit -m "<Change This>"
 git push -u origin master 
 ```
 
+## ToDo
+1. 3.2 collapse all of the lineinfile to a single play, using with_items

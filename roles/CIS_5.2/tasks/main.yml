@@ -1,0 +1,75 @@
+---
+# This playbook contains Ubuntu 18.04LTS CIS benchmark v1.0.0 settings
+
+- name: 5.2 - Verify sshd is started
+  systemd:
+    state: started
+    name: sshd
+  tags:
+    - CIS_5.2
+
+
+- name: 5.2.1 - Set sshd permissions
+  file:
+    path: "{{ item.path }}"
+    mode: "{{ item.mode }}"
+#    state: touch
+    owner: root
+    group: root
+  with_items:
+    - { path: '/etc/ssh/sshd_config', mode: '0600' }
+  notify:
+    - Restart sshd
+  tags:
+    - CIS_5.2.1
+
+- name: 5.2.2-15 - Set SSH config settings
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+   - { regexp: 'Protocol',                line: 'Protocol 2' }
+   - { regexp: 'LogLevel',                line: 'LogLevel INFO' }
+   - { regexp: 'X11Forwarding',           line: 'X11Forwarding no' }
+   - { regexp: 'MaxAuthTries',            line: 'MaxAuthTries 4' }
+   - { regexp: 'IgnoreRhosts',            line: 'IgnoreRhosts yes' }
+   - { regexp: 'HostbasedAuthentication', line: 'HostbasedAuthentication no' }
+   - { regexp: 'PermitRootLogin',         line: 'PermitRootLogin no' }
+   - { regexp: 'PermitEmptyPasswords',    line: 'PermitEmptyPasswords no' }
+   - { regexp: 'PermitUserEnvironment',   line: 'PermitUserEnvironment no' }
+   - { regexp: 'ClientAliveInterval',     line: 'ClientAliveInterval 300' }
+   - { regexp: 'ClientAliveCountMax',     line: 'ClientAliveCountMax 0' }
+   - { regexp: 'LoginGraceTime',          line: 'LoginGraceTime 60' }
+   - { regexp: 'Banner',                  line: 'Banner /etc/issue.net' }
+# Un comment the below lines when variable is set
+##   - { regexp: 'AllowUsers',              line: 'AllowUsers  {{ SSH_ALLOWUSERS }}' }
+##   - { regexp: 'AllowGroups',             line: 'AllowGroups {{ SSH_ALLOWGROUPS }}' }
+##   - { regexp: 'DenyUsers',               line: 'DenyUsers   {{ SSH_DENYUSERS }}' }
+##   - { regexp: 'DenyGroups',              line: 'DenyGroups  {{ SSH_DENYGROUPS }}' }
+# This MAC setting is super restrictive
+#   - { regexp: 'MACs',                    line: 'MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com' }
+  notify:
+    - Restart sshd
+#    - Reboot host
+  tags:
+    - CIS_5.2.2
+    - CIS_5.2.3
+    - CIS_5.2.4
+    - CIS_5.2.5
+    - CIS_5.2.6
+    - CIS_5.2.7
+    - CIS_5.2.8
+    - CIS_5.2.9
+    - CIS_5.2.10
+    - CIS_5.2.11
+    - CIS_5.2.12
+    - CIS_5.2.13
+    - CIS_5.2.14
+    - CIS_5.2.15
+
+- debug:
+    msg:
+      - "5.2.11 - MACs config is currently disabled. Need to add version to ansible run"
+      - "5.2.14 - Set the appropriate variables in group_vars/all.yml"
+      - "5.2.14 - Uncomment allow/deny lines in roles/CIS_5.2/tasks/main.yml"

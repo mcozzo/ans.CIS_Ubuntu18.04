@@ -1,0 +1,13 @@
+---
+# This playbook contains common handlers that can be called in "setup" tasks.
+
+#handlers:
+
+- name: Restart cron
+  systemd:
+    name: cron
+    state: restarted
+    enabled: yes
+
+- name: Reboot host
+  reboot:

@@ -28,7 +28,7 @@
   tags:
     - CIS_4
 
-
-#  vars:
-#    - ansible_python_interpreter: /usr/bin/python3
-#- import_playbook: dockerhosts.yml
+- name: CIS 5
+  import_playbook: CIS_5.yml
+  tags:
+    - CIS_5
