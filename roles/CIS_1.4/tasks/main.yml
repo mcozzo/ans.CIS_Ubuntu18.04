@@ -14,6 +14,9 @@
   notify:
     - Update Grub2 config file ubuntu
 #    - Reboot host
+  become: yes
+  become_user: root
+
 
 - name: 1.4.2 - Set grub password file
   template:
@@ -26,6 +29,8 @@
   notify:
     - Update Grub2 config file ubuntu
     - Reboot host
+  become: yes
+  become_user: root
 
 # Allow system to auto boot
 - name: 1.4.2 - Set grub menu entry --unrestricted
@@ -39,4 +44,6 @@
   notify:
     - Reboot host
     - Update Grub2 config file ubuntu
+  become: yes
+  become_user: root
 

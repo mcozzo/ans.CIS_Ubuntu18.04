@@ -5,6 +5,9 @@
 
 - name: Update Grub2 config file ubuntu
   shell: /usr/sbin/update-grub
+  become: yes
+  become_user: root
+
 
 - name: Reboot host
   reboot:
