@@ -34,7 +34,7 @@
 # https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-generate-encrypted-passwords-for-the-user-module
 # python -c "from passlib.hash import sha512_crypt; import getpass; print(sha512_crypt.using(rounds=5000).hash(getpass.getpass()))"
 
-- name: Add "{{ ansible_user }}" to wheel group
+- name: "Add {{ ansible_user }} to wheel group"
   user:
     name: "{{ ansible_user }}"
     groups: wheel
@@ -56,7 +56,7 @@
   become: yes
   become_user: "{{ ansible_user }}"
 
-- name: "Place authorized keys - {{ ansible_user }} ~/.ssh/authorized_keys"
+- name: "Place authorized keys - {{ ansible_user }} /.ssh/authorized_keys"
   template:
     src: ssh_authorized_keys.j2
     dest: "~/.ssh/authorized_keys"
@@ -90,7 +90,7 @@
   become: yes
   become_user: "{{ ansible_user }}"
 
-- name: "SSH key settings, chmod & chown ~/.ssh/id_rsa"
+- name: SSH key settings, chmod & chown ~/.ssh/id_rsa
   file:
     path: "{{ item.path }}"
     owner: "{{ ansible_user }}"
