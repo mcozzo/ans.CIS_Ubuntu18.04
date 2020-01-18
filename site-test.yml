@@ -1,6 +1,7 @@
 all:
   hosts:
     10.11.14.51:
+    #172.16.14.182:
   vars:
     ansible_connection: ssh
     ansible_user: ansible-svc
