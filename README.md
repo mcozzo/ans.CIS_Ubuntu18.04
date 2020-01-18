@@ -25,7 +25,7 @@ sudo apt-add-repository --yes --update ppa:ansible/ansible
 sudo apt install ansible
 ```
 
-### Pulling config from git
+### Pulli config from git
 Create a folder, initialize git, pull the repo
 ```bash
 mkdir ~/git
@@ -42,7 +42,7 @@ ansible-playbook -i site-test.yml site-play.yml
 # Run against prod
 ansible-playbook -i site-prod.yml site-play.yml
 # Run service account creation
-ansible-playbook -i site-test.yml site-play.yml --tags user -e "ansible_ssh_user=mattcozzolino" --ask-pass
+ansible-playbook -i site-test.yml site-play.yml --tags user -e "ansible_ssh_user=mattcozzolino" --ask-pass -K
 ```
 If you only want to run specific plays
 ```bash

@@ -3,10 +3,12 @@
 
 - name: Apply CIS 1.1
   hosts: all
+  become: yes
   roles:
     - CIS_1.1
   tags:
     - CIS_1.1
+
 
 - name: Apply CIS 1.2
   hosts: all
