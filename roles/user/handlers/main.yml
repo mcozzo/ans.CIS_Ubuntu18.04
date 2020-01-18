@@ -9,6 +9,6 @@
 #    state: restarted
 #    enabled: yes
 
-- name: Reboot host
-  reboot:
+#- name: Reboot host
+#  reboot:
 
