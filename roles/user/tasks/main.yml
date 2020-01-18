@@ -1,13 +1,13 @@
 ---
 # This playbook contains common plays that will be run on all nodes.
 
-- name: "Make sure we have a 'wheel' group"
-  group:
-    name: wheel
-    state: present
-  tags:
-    - user
-
+#- name: "Make sure we have a 'wheel' group"
+#  group:
+#    name: wheel
+#    state: present
+#  tags:
+#    - user
+#
 #- name: "Allow 'wheel' group to have passwordless sudo"
 #  lineinfile:
 #    dest: /etc/sudoers
