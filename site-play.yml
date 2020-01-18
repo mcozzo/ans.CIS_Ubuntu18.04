@@ -8,33 +8,32 @@
   tags:
     - common
 
-#- name: CIS 1
-#  import_playbook: CIS_1.yml
-#  tags:
-#    - CIS_1
-#  become: yes
-#
-#- name: CIS 2
-#  import_playbook: CIS_2.yml
-#  tags:
-#    - CIS_2
-#  become: yes
-#
-#- name: CIS 3
-#  import_playbook: CIS_3.yml
-#  tags:
-#    - CIS_3
-#  become: yes
-#
-#- name: CIS 4
-#  import_playbook: CIS_4.yml
-#  tags:
-#    - CIS_4
-#  become: yes
-#
-#- name: CIS 5
-#  import_playbook: CIS_5.yml
-#  tags:
-#    - CIS_5
-#  become: yes
-#
+- name: CIS 1
+  import_playbook: CIS_1.yml
+  tags:
+    - CIS_1
+  become: yes
+
+- name: CIS 2
+  import_playbook: CIS_2.yml
+  tags:
+    - CIS_2
+  become: yes
+
+- name: CIS 3
+  import_playbook: CIS_3.yml
+  tags:
+    - CIS_3
+  become: yes
+
+- name: CIS 4
+  import_playbook: CIS_4.yml
+  tags:
+    - CIS_4
+  become: yes
+
+- name: CIS 5
+  import_playbook: CIS_5.yml
+  tags:
+    - CIS_5
+  become: yes

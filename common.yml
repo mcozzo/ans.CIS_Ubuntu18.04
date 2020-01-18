@@ -9,10 +9,9 @@
   tags:
     - never
     - user
-#
-#- name: Apply common config
-#  hosts: all
-#  roles:
-#    - common
-#  become: yes
 
+- name: Apply common config
+  hosts: all
+  roles:
+    - common
+  become: yes
