@@ -1,14 +1,14 @@
 ---
 # This playbook is for my stuff
 
-#- name: Apply user config
-#  hosts: all
-#  roles:
-#    - user
-#  become: yes
-#  tags:
-#    - never
-#    - user
+- name: Apply user config
+  hosts: all
+  roles:
+    - user
+  become: yes
+  tags:
+    - never
+    - user
 #
 #- name: Apply common config
 #  hosts: all
