@@ -44,8 +44,6 @@
   tags:
     - user
 
-# Create SSH stuff for Users
-
 - name: Create '~/.ssh' if it does not exist
   file:
     path: "~/.ssh"
