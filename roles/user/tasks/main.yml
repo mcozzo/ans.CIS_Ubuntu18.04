@@ -79,16 +79,16 @@
   become: yes
   become_user: "{{ ansible_user }}"
 
-- name: "Generate keypair for user "
-  openssh_keypair:
-    path: "~/.ssh/id_rsa"
-    size: 2048
-    type: rsa
-  when: ssh_keys.stat.exists == false
-  tags:
-    - user
-  become: yes
-  become_user: "{{ ansible_user }}"
+#- name: "Generate keypair for user "
+#  openssh_keypair:
+#    path: "~/.ssh/id_rsa"
+#    size: 2048
+#    type: rsa
+#  when: ssh_keys.stat.exists == false
+#  tags:
+#    - user
+#  become: yes
+#  become_user: "{{ ansible_user }}"
 
 - name: SSH key settings, chmod & chown ~/.ssh/id_rsa
   file:
