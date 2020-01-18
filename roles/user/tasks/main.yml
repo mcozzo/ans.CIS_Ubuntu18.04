@@ -26,7 +26,7 @@
 - name: "Add the user {{ ansible_user }}"
   user:
     name: "{{ ansible_user }}"
-    comment: Ansible User
+    comment: "Ansible service account"
     uid: 1010
     groups: wheel,sudo
     password: "$6$CTrxWlM6DN0id6NH$YUvUtgfZ3odHieUIKOK.14w1um2owPIny83fVGPCcq91j/C657r552WlBYxexhjfqZS8tzNVbI4UbCZRfYkp4/"
@@ -56,7 +56,7 @@
   become: yes
   become_user: "{{ ansible_user }}"
 
-- name: "Place authorized keys - /home/{{ ansible_user }}/.ssh/authorized_keys"
+- name: "Place authorized keys - {{ ansible_user }} ~/.ssh/authorized_keys"
   template:
     src: ssh_authorized_keys.j2
     dest: "~/.ssh/authorized_keys"
@@ -90,7 +90,7 @@
   become: yes
   become_user: "{{ ansible_user }}"
 
-- name: SSH key settings, chmod & chown ~/.ssh/id_rsa
+- name: "SSH key settings, chmod & chown ~/.ssh/id_rsa"
   file:
     path: "{{ item.path }}"
     owner: "{{ ansible_user }}"
