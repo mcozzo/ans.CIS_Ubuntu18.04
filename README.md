@@ -11,11 +11,18 @@ https://docs.microsoft.com/en-us/windows/wsl/install-manual <br>
 https://docs.microsoft.com/en-us/windows/wsl/initialize-distro <br>
 
 ### Update WSL
-From inside your WSL linux edition.
+Update APT
 ```bash
 sudo apt-get update
 sudo apt-get upgrade
-sudo apt-get install ansible
+```
+
+### Install Ansible 
+```bash
+sudo apt update
+sudo apt install software-properties-common
+sudo apt-add-repository --yes --update ppa:ansible/ansible
+sudo apt install ansible
 ```
 
 ### Pulling config from git
