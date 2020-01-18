@@ -1,117 +1,113 @@
 ---
 # This playbook contains common plays that will be run on all nodes.
 
-#- name: "Make sure we have a 'wheel' group"
-#  group:
-#    name: wheel
-#    state: present
-#  tags:
-#    - user
-#
-#- name: "Allow 'wheel' group to have passwordless sudo"
-#  lineinfile:
-#    dest: /etc/sudoers
-#    state: present
-#    regexp: '^%wheel'
-#    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
-#    validate: visudo -cf %s
-#
-##- name: Add sudoers users to wheel group
-##  user:
-##    name: "{{ item }}"
-##    groups: wheel
-##    append: yes
-##  with_items: "{{ sudoers }}"
-#
-#- name: "Add the user {{ ansible_user }}"
+- name: "Make sure we have a 'wheel' group"
+  group:
+    name: wheel
+    state: present
+  tags:
+    - user
+
+- name: "Allow 'wheel' group to have passwordless sudo"
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    validate: visudo -cf %s
+
+#- name: Add sudoers users to wheel group
 #  user:
-#    name: "{{ ansible_user }}"
-#    comment: "Ansible service account"
-#    uid: 1010
-#    groups: wheel,sudo
-#    password: "$6$CTrxWlM6DN0id6NH$YUvUtgfZ3odHieUIKOK.14w1um2owPIny83fVGPCcq91j/C657r552WlBYxexhjfqZS8tzNVbI4UbCZRfYkp4/"
-## Generate passwords like this
-## https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-generate-encrypted-passwords-for-the-user-module
-## python -c "from passlib.hash import sha512_crypt; import getpass; print(sha512_crypt.using(rounds=5000).hash(getpass.getpass()))"
-#
-#
-#
-#
-#- name: "Add {{ ansible_user }} to wheel group"
-#  user:
-#    name: "{{ ansible_user }}"
+#    name: "{{ item }}"
 #    groups: wheel
 #    append: yes
-#    shell: /bin/bash
-##  with_items: "{{ sudoers }}"
-#  tags:
-#    - user
-#
-#- name: Create '~/.ssh' if it does not exist
-#  file:
-#    path: "~/.ssh"
-#    state: directory
-#    mode: '0700'
-#    owner: "{{ ansible_user }}"
-#    group: "{{ ansible_user }}"
-#  become: yes
-#  become_user: "{{ ansible_user }}"
-#
-#- name: "Place authorized keys - {{ ansible_user }} /.ssh/authorized_keys"
+#  with_items: "{{ sudoers }}"
+
+- name: "Add the user {{ ansible_user }}"
+  user:
+    name: "{{ ansible_user }}"
+    comment: "Ansible service account"
+    uid: 1010
+    groups: wheel,sudo
+    password: "$6$CTrxWlM6DN0id6NH$YUvUtgfZ3odHieUIKOK.14w1um2owPIny83fVGPCcq91j/C657r552WlBYxexhjfqZS8tzNVbI4UbCZRfYkp4/"
+# Generate passwords like this
+# https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-generate-encrypted-passwords-for-the-user-module
+# python -c "from passlib.hash import sha512_crypt; import getpass; print(sha512_crypt.using(rounds=5000).hash(getpass.getpass()))"
+
+- name: "Add {{ ansible_user }} to wheel group"
+  user:
+    name: "{{ ansible_user }}"
+    groups: wheel
+    append: yes
+    shell: /bin/bash
+#  with_items: "{{ sudoers }}"
+  tags:
+    - user
+
+- name: Create '~/.ssh' if it does not exist
+  file:
+    path: "~/.ssh"
+    state: directory
+    mode: '0700'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  become: yes
+  become_user: "{{ ansible_user }}"
+
+- name: "Place authorized keys - {{ ansible_user }} /.ssh/authorized_keys"
+  template:
+    src: ssh_authorized_keys.j2
+    dest: "~/.ssh/authorized_keys"
+#    dest: "/home/{{ ansible_user }}/.ssh/authorized_keys"
+    mode: '0600'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  tags:
+    - user
+  become: yes
+  become_user: "{{ ansible_user }}"
+
+- name: "Check for {{ ansible_user }} id_rsa keys"
+  stat:
+    path: "~/.ssh/id_rsa"
+  register: ssh_keys
+  tags:
+    - user
+    - ssh
+  become: yes
+  become_user: "{{ ansible_user }}"
+
+- name: "Generate keypair for user "
+  openssh_keypair:
+    path: "~/.ssh/id_rsa"
+    size: 2048
+    type: rsa
+  when: ssh_keys.stat.exists == false
+  tags:
+    - user
+  become: yes
+  become_user: "{{ ansible_user }}"
+
+- name: SSH key settings, chmod & chown ~/.ssh/id_rsa
+  file:
+    path: "{{ item.path }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - { path: '~/.ssh/id_rsa',     mode: '0600' }
+    - { path: '~/.ssh/id_rsa.pub', mode: '0644' }
+  tags:
+    - user
+  become: yes
+  become_user: "{{ ansible_user }}"
+
+#- name: Place known_hosts
 #  template:
-#    src: ssh_authorized_keys.j2
-#    dest: "~/.ssh/authorized_keys"
-##    dest: "/home/{{ ansible_user }}/.ssh/authorized_keys"
-#    mode: '0600'
+#    src: ssh_known_hosts
+#    dest: ~/.ssh/known_hosts
+#    mode: '0644'
 #    owner: "{{ ansible_user }}"
 #    group: "{{ ansible_user }}"
 #  tags:
 #    - user
-#  become: yes
-#  become_user: "{{ ansible_user }}"
-#
-#- name: "Check for {{ ansible_user }} id_rsa keys"
-#  stat:
-#    path: "~/.ssh/id_rsa"
-#  register: ssh_keys
-#  tags:
-#    - user
-#    - ssh
-#  become: yes
-#  become_user: "{{ ansible_user }}"
-#
-#- name: "Generate keypair for user "
-#  openssh_keypair:
-#    path: "~/.ssh/id_rsa"
-#    size: 2048
-#    type: rsa
-#  when: ssh_keys.stat.exists == false
-#  tags:
-#    - user
-#  become: yes
-#  become_user: "{{ ansible_user }}"
-#
-#- name: SSH key settings, chmod & chown ~/.ssh/id_rsa
-#  file:
-#    path: "{{ item.path }}"
-#    owner: "{{ ansible_user }}"
-#    group: "{{ ansible_user }}"
-#    mode: "{{ item.mode }}"
-#  with_items:
-#    - { path: '~/.ssh/id_rsa',     mode: '0600' }
-#    - { path: '~/.ssh/id_rsa.pub', mode: '0644' }
-#  tags:
-#    - user
-#  become: yes
-#  become_user: "{{ ansible_user }}"
-#
-##- name: Place known_hosts
-##  template:
-##    src: ssh_known_hosts
-##    dest: ~/.ssh/known_hosts
-##    mode: '0644'
-##    owner: "{{ ansible_user }}"
-##    group: "{{ ansible_user }}"
-##  tags:
-##    - user
-#
