@@ -10,7 +10,6 @@
     - apt
     - CIS_1.2.2
   become: yes
-  become_user: root
 
 - name: 1.2.1 - Update apt
   apt:
@@ -19,5 +18,4 @@
     - apt
     - CIS_1.2.1
   become: yes
-  become_user: root
 
