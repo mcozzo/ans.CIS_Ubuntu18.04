@@ -4,16 +4,16 @@
 
 - name: Apply CIS 5.1
   hosts: all
+  become: yes
   roles:
     - CIS_5.1
-  become: yes
   tags:
     - CIS_5.1
 
 - name: Apply CIS 5.2
   hosts: all
+  become: yes
   roles:
     - CIS_5.2
-  become: yes
   tags:
     - CIS_5.2

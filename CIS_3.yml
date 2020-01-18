@@ -3,56 +3,56 @@
 
 - name: Apply CIS 3.1
   hosts: all
+  become: yes
   roles:
     - CIS_3.1
-  become: yes
   tags:
     - CIS_3.1
 
 - name: Apply CIS 3.2
   hosts: all
+  become: yes
   roles:
     - CIS_3.2
-  become: yes
   tags:
     - CIS_3.2
 
 - name: Apply CIS 3.3
   hosts: all
+  become: yes
   roles:
     - CIS_3.3
-  become: yes
   tags:
     - CIS_3.3
 
 - name: Apply CIS 3.4
   hosts: all
+  become: yes
   roles:
     - CIS_3.4
-  become: yes
   tags:
     - CIS_3.4
 
 - name: Apply CIS 3.5
   hosts: all
+  become: yes
   roles:
     - CIS_3.5
-  become: yes
   tags:
     - CIS_3.5
 
 - name: Apply CIS 3.6
   hosts: all
+  become: yes
   roles:
     - CIS_3.6
-  become: yes
   tags:
     - CIS_3.6
 
 - name: Apply CIS 3.7
   hosts: all
+  become: yes
   roles:
     - CIS_3.7
-  become: yes
   tags:
     - CIS_3.7

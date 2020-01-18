@@ -12,6 +12,7 @@
 
 - name: Apply CIS 1.2
   hosts: all
+  become: yes
   roles:
     - CIS_1.2
   tags:
@@ -19,6 +20,7 @@
 
 - name: Apply CIS 1.3
   hosts: all
+  become: yes
   roles:
     - CIS_1.3
   tags:
@@ -26,6 +28,7 @@
 
 - name: Apply CIS 1.4
   hosts: all
+  become: yes
   roles:
     - CIS_1.4
   tags:
@@ -33,16 +36,15 @@
 
 - name: Apply CIS 1.5
   hosts: all
+  become: yes
   roles:
     - CIS_1.5
   tags:
     - CIS_1.5
-  become: yes
-#  become_user: root
-
 
 - name: Apply CIS 1.6
   hosts: all
+  become: yes
   roles:
     - CIS_1.6
   tags:
@@ -50,65 +52,18 @@
 
 - name: Apply CIS 1.7
   hosts: all
+  become: yes
   roles:
     - CIS_1.7
   tags:
     - CIS_1.7
-  become: yes
 
 - name: Apply CIS 1.8
   hosts: all
+  become: yes
   roles:
     - CIS_1.8
   tags:
     - CIS_1.8
-  become: yes
 
 
-#- name: Apply Desktop
-#  hosts: all
-#  roles:
-#    - desktop
-#  become: yes
-
-#- name: Install Docker
-#  hosts: all
-#  roles:
-#    - dockerhosts
-#  become: yes
-
-#- name: Download cozzo.net docker configs
-#  hosts: all
-#  roles:
-#    - docker-compose
-
-
-#  become_user: ubuntu
-
-#- name: Apply network config to all nodes
-#  hosts: all
-#  roles:
-#    - network
-#  become: yes
-
-#- name: Mount common volumes on all nodes
-#  hosts: all
-#  roles:
-#    - mounts
-#  become: yes
-
-#  become: yes
-
-
-#- name: Enabling passwordless login on the remote host
-#  hosts: all
-#  vars:
-#    username: devops
-#  tasks:
-#  - name: Allow 'wheel' group to have passwordless sudo
-#    lineinfile:
-#      dest: /etc/sudoers
-#      state: present
-#      regexp: '^%wheel'
-#      line: '%wheel ALL=(ALL) NOPASSWD: ALL'
-#      validate: 'visudo -cf %s'

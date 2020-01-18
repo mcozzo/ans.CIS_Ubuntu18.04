@@ -9,6 +9,7 @@
 #- name: Apply CIS 4.1
 - name: Skipping 4.1 because it's all L2
   hosts: all
+  become: yes
   roles:
 #    - CIS_4.1
   become: yes
@@ -17,8 +18,8 @@
 
 - name: Apply CIS 4.2
   hosts: all
+  become: yes
   roles:
     - CIS_4.2
-  become: yes
   tags:
     - CIS_4.2
