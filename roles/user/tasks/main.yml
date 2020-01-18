@@ -8,35 +8,34 @@
   tags:
     - user
 
-- name: "Allow 'wheel' group to have passwordless sudo"
-  lineinfile:
-    dest: /etc/sudoers
-    state: present
-    regexp: '^%wheel'
-    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
-    validate: visudo -cf %s
-
-#- name: Add sudoers users to wheel group
+#- name: "Allow 'wheel' group to have passwordless sudo"
+#  lineinfile:
+#    dest: /etc/sudoers
+#    state: present
+#    regexp: '^%wheel'
+#    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+#    validate: visudo -cf %s
+#
+##- name: Add sudoers users to wheel group
+##  user:
+##    name: "{{ item }}"
+##    groups: wheel
+##    append: yes
+##  with_items: "{{ sudoers }}"
+#
+#- name: "Add the user {{ ansible_user }}"
 #  user:
-#    name: "{{ item }}"
-#    groups: wheel
-#    append: yes
-#  with_items: "{{ sudoers }}"
-
-- name: "Add the user {{ ansible_user }}"
-  user:
-    name: "{{ ansible_user }}"
-    comment: "Ansible service account"
-    uid: 1010
-    groups: wheel,sudo
-    password: "$6$CTrxWlM6DN0id6NH$YUvUtgfZ3odHieUIKOK.14w1um2owPIny83fVGPCcq91j/C657r552WlBYxexhjfqZS8tzNVbI4UbCZRfYkp4/"
-# Generate passwords like this
-# https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-generate-encrypted-passwords-for-the-user-module
-# python -c "from passlib.hash import sha512_crypt; import getpass; print(sha512_crypt.using(rounds=5000).hash(getpass.getpass()))"
-
-
-
-############################################
+#    name: "{{ ansible_user }}"
+#    comment: "Ansible service account"
+#    uid: 1010
+#    groups: wheel,sudo
+#    password: "$6$CTrxWlM6DN0id6NH$YUvUtgfZ3odHieUIKOK.14w1um2owPIny83fVGPCcq91j/C657r552WlBYxexhjfqZS8tzNVbI4UbCZRfYkp4/"
+## Generate passwords like this
+## https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-generate-encrypted-passwords-for-the-user-module
+## python -c "from passlib.hash import sha512_crypt; import getpass; print(sha512_crypt.using(rounds=5000).hash(getpass.getpass()))"
+#
+#
+#
 #
 #- name: "Add {{ ansible_user }} to wheel group"
 #  user:
