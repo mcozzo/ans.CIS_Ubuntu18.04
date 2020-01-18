@@ -1,14 +1,14 @@
 ---
 # This playbook contains common plays that will be run on all nodes.
 
-- name: Make sure we have a 'wheel' group
+- name: "Make sure we have a 'wheel' group"
   group:
     name: wheel
     state: present
   tags:
     - user
 
-- name: Allow 'wheel' group to have passwordless sudo
+- name: "Allow 'wheel' group to have passwordless sudo"
   lineinfile:
     dest: /etc/sudoers
     state: present
@@ -23,7 +23,7 @@
 #    append: yes
 #  with_items: "{{ sudoers }}"
 
-- name: Add the user "{{ ansible_user }}"
+- name: "Add the user {{ ansible_user }}"
   user:
     name: "{{ ansible_user }}"
     comment: Ansible User
@@ -79,16 +79,16 @@
   become: yes
   become_user: "{{ ansible_user }}"
 
-#- name: "Generate keypair for user "
-#  openssh_keypair:
-#    path: "~/.ssh/id_rsa"
-#    size: 2048
-#    type: rsa
-#  when: ssh_keys.stat.exists == false
-#  tags:
-#    - user
-#  become: yes
-#  become_user: "{{ ansible_user }}"
+- name: "Generate keypair for user "
+  openssh_keypair:
+    path: "~/.ssh/id_rsa"
+    size: 2048
+    type: rsa
+  when: ssh_keys.stat.exists == false
+  tags:
+    - user
+  become: yes
+  become_user: "{{ ansible_user }}"
 
 - name: SSH key settings, chmod & chown ~/.ssh/id_rsa
   file:
