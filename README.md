@@ -61,6 +61,6 @@ git push -u origin master
 ```
 
 ## ToDo
-1. 3.2 collapse all of the lineinfile to a single play, using with_items
-2. 1.7 collapse all of the lineinfile to a single play, using with_items
-3. 2.2 Clean up service shutdown/removal
+* 3.2 collapse all of the lineinfile to a single play, using with_items
+* 1.7 collapse all of the lineinfile to a single play, using with_items
+* 2.2 Clean up service shutdown/removal
