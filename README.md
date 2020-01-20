@@ -7,7 +7,8 @@ Section 1.4 Please follow the directions and update the password for the GRUB te
 Section 4.2 This could come out and be palced in a global variable
 
 ## Getting started 
-### Setting up WSL 
+### Setting up environment
+#### Install WSL
 https://docs.microsoft.com/en-us/windows/wsl/install-on-server <br>
 https://docs.microsoft.com/en-us/windows/wsl/install-manual <br> 
 https://docs.microsoft.com/en-us/windows/wsl/initialize-distro <br>
