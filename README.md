@@ -2,8 +2,10 @@
 ## Readme notes
 ### Configure grub password 
 Section 1.4 Please follow the directions and update the password for the GRUB template file
+
 ### Configure logging host
 Section 4.2 This could come out and be palced in a global variable
+
 ## Getting started 
 ### Setting up WSL & linux 
 https://docs.microsoft.com/en-us/windows/wsl/install-on-server <br>

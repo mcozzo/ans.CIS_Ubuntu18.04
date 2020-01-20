@@ -11,3 +11,35 @@ all:
     dns_servers:
       - 10.11.12.11
       - 10.11.12.12
+
+    # User variables
+    # SSH_USER: ansible-svc
+    SSH_PUBKEY: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCwQQ1Srbtbs5snd6/QuY7BgJA4CSK+FDCBdmnH9zv2h2RGZCzTP4rTgMS42JRRHdACtETzSLis+HU2Vi9jCW1lS4aamH6u6St514Xih3m8KLa0y0DIzX8lxO3XTpoVxJgqXXk83LeBu5UbyPIxfARJPQbGMY2c3bYVt/Mq1Xl6zis682by9ROIinGAnObrGDgg04O1bC1K53uvt12NrTnqN4FFFBiT3sDv2Rx/g5obTiLGScFzgPlMvxQhvPN2od5OgqBj5NybOMgMfqKUqed6yM2p4tJNMPK1aFT385Pfvxl1woY0G0ghiFvy0mbeKF5omyVSYECcXlDJHVposleR mattcozzolino@Galactica.local
+
+    # CIS_1.4
+    # Grub config
+    # Generate PW: https://help.ubuntu.com/community/Grub2/Passwords
+    # Defaults
+    # UN: root
+    # PW: P@ssw0rd
+    GRUB_USER: root
+    GRUB_PASSWD: grub.pbkdf2.sha512.10000.7EFF1083D0A9C2B992E2D3479CD106261C970A9626CB7616C34416F45A7BEE46BBF1156E1BFF8D05815A4B7DA3BDD71873E8A472890C8A654C73E2409F89E258.CDCF4192A9E058446304BA764BBF1C1C557ED0DE12EE13F764309E100EEEA137C35F6D476867A6F53C709CE5ECB1B37296299FAE95DCDDCDAC3EB2F3E2F7A48B
+
+    # CIS_4.2
+    # Set logging host VAR
+    LOGGING_HOST: my.logging.server.com
+
+    # CIS_5.2
+    # SSH config, also uncomment relevant lines in roles/CIS_5.2/tasks/main.yml
+    SSH_ALLOWUSERS: USER1 USER2
+    SSH_ALLOWGROUPS: GROUP1 GROUP2
+    SSH_DENYUSERS: USER3 USER4
+    SSH_DENYGROUPS: GROUP3 GROUP4
+
+    # CIS_2.2
+    # Set NTP servers
+    NTP_SERVER1: 0.ubuntu.pool.ntp.org
+    NTP_SERVER2: 1.ubuntu.pool.ntp.org
+    NTP_SERVER3: 2.ubuntu.pool.ntp.org
+    NTP_SERVER4: 3.ubuntu.pool.ntp.org
+
