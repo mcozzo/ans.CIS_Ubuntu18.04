@@ -9,9 +9,9 @@ Section 4.2 This could come out and be palced in a global variable
 ## Getting started 
 ### Setting up environment
 #### Install WSL
-https://docs.microsoft.com/en-us/windows/wsl/install-on-server <br>
-https://docs.microsoft.com/en-us/windows/wsl/install-manual <br> 
-https://docs.microsoft.com/en-us/windows/wsl/initialize-distro <br>
+* https://docs.microsoft.com/en-us/windows/wsl/install-on-server <br>
+* https://docs.microsoft.com/en-us/windows/wsl/install-manual <br> 
+* https://docs.microsoft.com/en-us/windows/wsl/initialize-distro <br>
 
 #### Update APT
 ```bash
