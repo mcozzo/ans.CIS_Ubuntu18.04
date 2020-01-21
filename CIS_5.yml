@@ -17,3 +17,11 @@
     - CIS_5.2
   tags:
     - CIS_5.2
+
+- name: Apply CIS 5.3
+  hosts: all
+  become: yes
+  roles:
+    - CIS_5.3
+  tags:
+    - CIS_5.3
