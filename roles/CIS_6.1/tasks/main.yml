@@ -1,0 +1,52 @@
+---
+# This playbook contains Ubuntu 18.04LTS CIS benchmark v1.0.0 settings
+
+- name: 6.1.2,4,6,8 - Set permissions, root:root, 644
+  file:
+    path: "{{ item.file }}"
+    owner: root
+    group: root
+    mode: 644
+  with_items:
+   - { file: '/etc/passwd' }
+   - { file: '/etc/group' }
+   - { file: '/etc/passwd-' }
+   - { file: '/etc/group-' }
+  tags:
+    - CIS_6.1.2
+    - CIS_6.1.4
+    - CIS_6.1.6
+    - CIS_6.1.8
+
+- name: 6.1.3,5,7 - Set permissions, root:shadow, 640
+  file:
+    path: "{{ item.file }}"
+    owner: root
+    group: shadow
+    mode: 640
+  with_items:
+   - { file: '/etc/shadow' }
+   - { file: '/etc/gshadow' }
+   - { file: '/etc/shadow-' }
+   - { file: '/etc/gshadow-' }
+  tags:
+    - CIS_6.1.3
+    - CIS_6.1.5
+    - CIS_6.1.7
+    - CIS_6.1.9
+
+- debug:
+    msg: "6.1.10 - Set global permissions o-w for all files, prefer to handle that individually"
+- debug:
+    msg: "6.1.11 - Verify no unowned files globally. Scan / handle that individually"
+- debug:
+    msg: "6.1.12 - Verify no ungrouped files globally. Scan / handle that individually"
+- debug:
+    msg: "6.1.13 - Scan for SUID executables. Scan / handle that individually"
+- debug:
+    msg: "6.1.14 - Scan for SGID executables. Scan / handle that individually"
+
+
+
+
+

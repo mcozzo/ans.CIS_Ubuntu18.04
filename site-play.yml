@@ -37,3 +37,9 @@
   become: yes
   tags:
     - CIS_5
+
+- name: CIS 6
+  import_playbook: CIS_6.yml
+  become: yes
+  tags:
+    - CIS_6

@@ -1,0 +1,485 @@
+---
+# This playbook contains Ubuntu 18.04LTS CIS benchmark v1.0.0 settings
+
+#- name: 4.3 - Check log rotate
+#  stat: path=/etc/logrotate.conf
+#  register: logrotate
+#  tags:
+#    - CIS_4.3
+#    - CIS_4.3.1
+
+- debug:
+    msg: "6.2.1 - Check for users with no password and lock. Needs logic to apply."
+
+- name: 6.2.1 - Ungracefully rip user from /etc/shadow
+  lineinfile:
+    path: /etc/shadow
+    regexp: '^[a-z0-9_-]+::'
+    state: absent
+  notify:
+    - Reboot host
+  tags:
+    - never
+    - CIS_6.2.1
+
+- debug:
+    msg: "6.2.2 - This may break stuff"
+
+- name: 6.2.2 - Strip legacy "+" entries from /etc/passwd
+  lineinfile:
+    path: /etc/passwd
+    regexp: '^\+:'
+    state: absent
+  notify:
+    - Reboot host
+  tags:
+    - never
+    - CIS_6.2.2
+
+- debug:
+    msg: "6.2.3 - This may break stuff"
+
+- name: 6.2.3 - Strip legacy "+" entries from /etc/shadow
+  lineinfile:
+    path: /etc/shadow
+    regexp: '^\+:'
+    state: absent
+  notify:
+    - Reboot host
+  tags:
+    - never
+    - CIS_6.2.3
+
+- debug:
+    msg: "6.2.4 - This may break stuff"
+
+- name: 6.2.4 - Strip legacy "+" entries from /etc/group
+  lineinfile:
+    path: /etc/group
+    regexp: '^\+:'
+    state: absent
+  notify:
+    - Reboot host
+  tags:
+    - never
+    - CIS_6.2.4
+
+- name: 6.2.5 - Check users with UID0
+  shell: "cat /etc/passwd | awk -F: '($3 == 0) { print $1 }'"
+  register: CIS625
+  notify:
+#    - Reboot host
+  tags:
+    - CIS_6.2.5
+
+- debug:
+#    msg: "Should only return 'root' "
+    msg: "6.2.5 - Should only return 'root' : {{ CIS625.stdout_lines }}"
+#    var: UID0.stdout_lines
+  tags:
+    - CIS_6.2.5
+
+- name: 6.2.6 - Verify rooth PATH integrity (Place script)
+  template:
+    src: root_path.sh.j2
+    dest: ~/root_path.sh
+    mode: u+x
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.6
+
+- name: 6.2.6 - Verify rooth PATH integrity (Execute script)
+  shell: ~/root_path.sh
+  register: CIS626
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.6
+
+- debug:
+#    msg: "Should only return 'root' "
+    msg: "6.2.6 - Nothing returned = success: {{ CIS626.stdout_lines }}"
+#    var: UID0.stdout_lines
+  tags:
+    - CIS_6.2.6
+
+- name: 6.2.7 - Verify user home directories exist (Place script)
+  template:
+    src: home_dir.sh.j2
+    dest: ~/home_dir.sh
+    mode: u+x
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.7
+
+- name: 6.2.7 - Verify user home directories exist (Execute script)
+  shell: ~/home_dir.sh
+  register: CIS627
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.7
+
+- debug:
+#    msg: "Should only return 'root' "
+    msg: "6.2.7 - Nothing returned = success: {{ CIS627.stdout_lines }}"
+#    var: UID0.stdout_lines
+  tags:
+    - CIS_6.2.7
+
+- name: 6.2.8 - Verify user home directory permissions (Place script)
+  template:
+    src: home_dir_permissions.sh.j2
+    dest: ~/home_dir_permissions.sh
+    mode: u+x
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.8
+
+- name: 6.2.8 - Verify user home directory permissions (Execute script)
+  shell: ~/home_dir_permissions.sh
+  register: CIS628_B
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.8
+
+- debug:
+#    msg: "Should only return 'root' "
+    msg: "6.2.8 - Nothing returned = success: {{ CIS628_B.stdout_lines }}"
+#    var: UID0.stdout_lines
+  tags:
+    - CIS_6.2.8
+
+# Attempt to get folder list for /home/*
+# once I can loop through CIS628_A.files[*].path can force setting regex values
+
+#- name: 6.2.8, 6.2.9, 6.2.10 - Find folders in /home
+#  find:
+#    paths: /home/
+#    recurse: no
+#    file_type: directory
+#  register: CIS628_A
+#  tags:
+#    - CIS_6.2.8
+#
+#- debug:
+##    msg: "Path exists and is a directory {{ item }}"
+##    var: CIS628_A
+#    var: item.value.path
+##  with_filetree: "/home/"
+##  become: yes
+##  when: item.state == 'directory'
+#  loop: "{{ lookup('dict', CIS628_A.files[0]) }}"
+##  with_dict: "{{ CIS628_A.files[0] }}"
+##  when: p.stat.isdir is defined and p.stat.isdir
+#  tags:
+#    - CIS_6.2.8
+
+- name: 6.2.9 - Verify user home directory owner (Place script)
+  template:
+    src: home_dir_owner.sh.j2
+    dest: ~/home_dir_owner.sh
+    mode: u+x
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.9
+
+- name: 6.2.9 - Verify user home directory owner (Execute script)
+  shell: ~/home_dir_owner.sh
+  register: CIS629
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.9
+
+- debug:
+#    msg: "Should only return 'root' "
+    msg: "6.2.9 - Nothing returned = success: {{ CIS629.stdout_lines }}"
+#    var: UID0.stdout_lines
+  tags:
+    - CIS_6.2.9
+
+- name: 6.2.10 - Verify user "dot" files are not writeable (Place script)
+  template:
+    src: home_dir_dot.sh.j2
+    dest: ~/home_dir_dot.sh
+    mode: u+x
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.10
+
+- name: 6.2.10 - Verify user "dot" files are not writeable (Execute script)
+  shell: ~/home_dir_dot.sh
+  register: CIS6210
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.10
+
+- debug:
+#    msg: "Should only return 'root' "
+    msg: "6.2.10 - Nothing returned = success: {{ CIS6210.stdout_lines }}"
+#    var: UID0.stdout_lines
+  tags:
+    - CIS_6.2.10
+
+- name: 6.2.11 - Verify no .forward file exists (Place script)
+  template:
+    src: user_forward.sh.j2
+    dest: ~/user_forward.sh
+    mode: u+x
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.11
+
+- name: 6.2.11 - Verify no .forward file exists (Execute script)
+  shell: ~/user_forward.sh
+  register: CIS6211
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.11
+
+- debug:
+#    msg: "Should only return 'root' "
+    msg: "6.2.11 - Nothing returned = success: {{ CIS6211.stdout_lines }}"
+#    var: UID0.stdout_lines
+  tags:
+    - CIS_6.2.11
+
+- name: 6.2.12 - Verify no .netrc file exists (Place script)
+  template:
+    src: user_netrc.sh.j2
+    dest: ~/user_netrc.sh
+    mode: u+x
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.12
+
+- name: 6.2.12 - Verify no .netrc file exists (Execute script)
+  shell: ~/user_netrc.sh
+  register: CIS6212
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.12
+
+- debug:
+#    msg: "Should only return 'root' "
+    msg: "6.2.12 - Nothing returned = success: {{ CIS6212.stdout_lines }}"
+#    var: UID0.stdout_lines
+  tags:
+    - CIS_6.2.12
+
+- name: 6.2.13 - Verify .netrc permissions (Place script)
+  template:
+    src: user_netrc_permissions.sh.j2
+    dest: ~/user_netrc_permissions.sh
+    mode: u+x
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.13
+
+- name: 6.2.13 - Verify .netrc permissions (Execute script)
+  shell: ~/user_netrc_permissions.sh
+  register: CIS6213
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.13
+
+- debug:
+    msg: "6.2.12 - Nothing returned = success: {{ CIS6213.stdout_lines }}"
+  tags:
+    - CIS_6.2.13
+
+- name: 6.2.14 - Verify no .rhosts files (Place script)
+  template:
+    src: user_rhosts.sh.j2
+    dest: ~/user_rhosts.sh
+    mode: u+x
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.14
+
+- name: 6.2.14 - Verify no .rhosts files (Execute script)
+  shell: ~/user_rhosts.sh
+  register: CIS6214
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.14
+
+- debug:
+    msg: "6.2.14 - Nothing returned = success: {{ CIS6214.stdout_lines }}"
+  tags:
+    - CIS_6.2.14
+
+- name: 6.2.15 - Compare groups against /etc/passwd & /etc/group (Place script)
+  template:
+    src: etc_passwd_vs_etc_group.sh.j2
+    dest: ~/etc_passwd_vs_etc_group.sh
+    mode: u+x
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.15
+
+- name: 6.2.15 - Compare groups against /etc/passwd & /etc/group (Execute script)
+  shell: ~/etc_passwd_vs_etc_group.sh
+  register: CIS6215
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.15
+
+- debug:
+    msg: "6.2.15 - Nothing returned = success: {{ CIS6215.stdout_lines }}"
+  tags:
+    - CIS_6.2.15
+
+- name: 6.2.16 - Check for duplicate UUIDs (Place script)
+  template:
+    src: dup_uuid.sh.j2
+    dest: ~/dup_uuid.sh
+    mode: u+x
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.16
+
+- name: 6.2.16 - Check for duplicate UUIDs (Execute script)
+  shell: ~/dup_uuid.sh
+  register: CIS6216
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.16
+
+- debug:
+    msg: "6.2.16 - Nothing returned = success: {{ CIS6216.stdout_lines }}"
+  tags:
+    - CIS_6.2.16
+
+- name: 6.2.17 - Check for duplicate GIDs (Place script)
+  template:
+    src: dup_gid.sh.j2
+    dest: ~/dup_gid.sh
+    mode: u+x
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.17
+
+- name: 6.2.17 - Check for duplicate GIDs (Execute script)
+  shell: ~/dup_gid.sh
+  register: CIS6217
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.17
+
+- debug:
+    msg: "6.2.17 - Nothing returned = success: {{ CIS6217.stdout_lines }}"
+  tags:
+    - CIS_6.2.17
+
+- name: 6.2.18 - Check for duplicate user names (Place script)
+  template:
+    src: dup_users.sh.j2
+    dest: ~/dup_users.sh
+    mode: u+x
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.18
+
+- name: 6.2.18 - Check for duplicate user names (Execute script)
+  shell: ~/dup_users.sh
+  register: CIS6218
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.18
+
+- debug:
+    msg: "6.2.18 - Nothing returned = success: {{ CIS6218.stdout_lines }}"
+  tags:
+    - CIS_6.2.18
+
+- name: 6.2.19 - Check for duplicate groups (Place script)
+  template:
+    src: dup_groups.sh.j2
+    dest: ~/dup_groups.sh
+    mode: u+x
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.19
+
+- name: 6.2.19 - Check for duplicate groups (Execute script)
+  shell: ~/dup_groups.sh
+  register: CIS6219
+  become: yes
+  become_user: "{{ ansible_user }}"
+  tags:
+#    - never
+    - CIS_6.2.19
+
+- debug:
+    msg: "6.2.19 - Nothing returned = success: {{ CIS6219.stdout_lines }}"
+  tags:
+    - CIS_6.2.19
+
+- name: 6.2.20 - Remove members from the shadow group
+  lineinfile:
+    path: /etc/group
+    regexp: '(?P<g>^shadow:[^:]*:[^:]*:)'
+    backrefs: yes
+    line: '\g<1>'
+  notify:
+    - Reboot host
+  tags:
+    - never
+    - CIS_6.2.20
+
+
+
+
