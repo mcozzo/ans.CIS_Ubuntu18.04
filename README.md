@@ -64,3 +64,6 @@ git push -u origin master
 * 3.2 collapse all of the lineinfile to a single play, using with_items
 * 1.7 collapse all of the lineinfile to a single play, using with_items
 * 2.2 Clean up service shutdown/removal
+* 5.2.11 - MACs config is currently disabled. Need to add version to ansible run
+* 5.2.14 - Set the appropriate variables in group_vars/all.yml
+* 5.2.14 - Uncomment allow/deny lines in roles/CIS_5.2/tasks/main.yml

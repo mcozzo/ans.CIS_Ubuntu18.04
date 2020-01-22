@@ -9,7 +9,6 @@
   tags:
     - CIS_1.1
 
-
 - name: Apply CIS 1.2
   hosts: all
   become: yes

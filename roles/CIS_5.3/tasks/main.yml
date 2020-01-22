@@ -7,8 +7,6 @@
     state: present
   tags:
     - CIS_5.3.1
-  notify:
-    - Restart pam.d
 
 - name: 5.3.1 - pam.d settings, password requirements '/etc/security/pwquality.conf'
   lineinfile:
@@ -27,19 +25,23 @@
   tags:
     - CIS_5.3.1
 
-- name: 5.3.1, 5.3.3 - pam.d settings, password retry '/etc/pam.d/common-password'
+- name: 5.3.1, 5.3.3, 5.3.4 - pam.d settings, password retry '/etc/pam.d/common-password'
   lineinfile:
     path: /etc/pam.d/common-password
     create: yes
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
+    #backrefs: yes
   with_items:
-   - { regexp: 'password[ \t]requisite[ \t]pam\_pwquality\.so',
-      line: 'password requisite pam_pwquality.so retry=3'  }
-   - { regexp: 'password[ \t]required[ \t]pam\_pwhistory\.so',
-      line: 'password required pam_pwquality.so retry=3'  }
-#   - { regexp: 'password[ \t]\[success\required[ \t]pam\_pwhistory\.so',
-#      line: 'password required pam_pwquality.so retry=3'  }
+    # 5.3.1
+   - { regexp: '^(?P<g>password\s+requisite\s+pam\_pwquality\.so)',
+      line: 'password        requisite                       pam_pwquality.so retry=3'  }
+    # 5.3.3
+   - { regexp: '^(?P<g>password\s+required\s+pam\_pwhistory\.so)',
+      line: 'password        required                        pam_pwhistory.so remember=5'  }
+    # 5.3.4
+   - { regexp: '^(?P<g>password\s+\[[a-z0-9_=. ]+\]\s+[a-z0-9_=. ]+(sha512))',
+      line: 'password        [success=1 default=ignore]      pam_unix.so obscure use_authtok try_first_pass sha512' }
   notify:
 #    - Reboot host
   tags:

@@ -1,0 +1,35 @@
+---
+# This playbook contains Ubuntu 18.04LTS CIS benchmark v1.0.0 settings
+
+#- name: 4.3 - Check log rotate
+#  stat: path=/etc/logrotate.conf
+#  register: logrotate
+#  tags:
+#    - CIS_4.3
+#    - CIS_4.3.1
+
+- name: 5.6 - Restrict access to SU 'auth required pam_wheel.so' in /etc/pam.d/su
+  lineinfile:
+    path: /etc/pam.d/su
+    regexp: '(auth(\s)+required(\s)+pam_wheel\.so(\s)+$)'
+    line: 'auth       required   pam_wheel.so'
+#  with_items:
+#   - { regexp: '^(ttyS[/n]{0,3})'      } # ttyS#       UART serial ports
+  notify:
+#    - Reboot host
+  tags:
+    - CIS_5.6
+    - CIS_5.6.1
+
+- name: "5.6 - Set Sudo members {{ SUDO_USERS }}"
+  user:
+    name: "{{ item }}"
+    groups: sudo
+    append: yes
+    # Append yes means that existing sudo users are not changed
+  loop: "{{ SUDO_USERS }}"
+  notify:
+#    - Reboot host
+  tags:
+    - CIS_5.6
+    - CIS_5.6.1

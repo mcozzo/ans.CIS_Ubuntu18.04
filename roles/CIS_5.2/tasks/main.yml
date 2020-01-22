@@ -42,7 +42,7 @@
    - { regexp: 'ClientAliveCountMax',     line: 'ClientAliveCountMax 0' }
    - { regexp: 'LoginGraceTime',          line: 'LoginGraceTime 60' }
    - { regexp: 'Banner',                  line: 'Banner /etc/issue.net' }
-# Un comment the below lines when variable is set
+### Un comment the below lines when variable is set
 ##   - { regexp: 'AllowUsers',              line: 'AllowUsers  {{ SSH_ALLOWUSERS }}' }
 ##   - { regexp: 'AllowGroups',             line: 'AllowGroups {{ SSH_ALLOWGROUPS }}' }
 ##   - { regexp: 'DenyUsers',               line: 'DenyUsers   {{ SSH_DENYUSERS }}' }

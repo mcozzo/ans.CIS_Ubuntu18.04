@@ -1,0 +1,77 @@
+---
+# This playbook contains Ubuntu 18.04LTS CIS benchmark v1.0.0 settings
+
+#- name: 4.3 - Check log rotate
+#  stat: path=/etc/logrotate.conf
+#  register: logrotate
+#  tags:
+#    - CIS_4.3
+#    - CIS_4.3.1
+
+- name: 5.5 - Restrict root login to system console
+  replace:
+    path: /etc/securetty
+    #after: 'NameVirtualHost [*]'
+    regexp: "{{ item.regexp }}"
+    replace: '# \1'
+  with_items:
+   - { regexp: '^(ttyS[/n]{0,3})'      } # ttyS#       UART serial ports
+   - { regexp: '^(ttyB[/n]{0,3})'      } # ttyB#       Serial MUX devices
+   - { regexp: '^(ttyH[/n]{0,3})'      } # ttyH#       Chase serial card
+   - { regexp: '^(ttyC[/n]{0,3})'      } # ttyC#       Cyclades serial cards
+   - { regexp: '^(ttyD[/n]{0,3})'      } # ttyD#       Digiboard serial cards
+   - { regexp: '^(ttyE[/n]{0,3})'      } # ttyE#       Stallion serial cards
+   - { regexp: '^(ttyX[/n]{0,3})'      } # ttyX#       Specialix serial cards
+   - { regexp: '^(ttyR[/n]{0,3})'      } # ttyR#       Comtrol Rocketport serial cards
+   - { regexp: '^(ttyL[/n]{0,3})'      } # ttyL#       SDL RISCom serial cards
+   - { regexp: '^(ttyP[/n]{0,3})'      } # ttyP#       Hayes ESP serial card
+   - { regexp: '^(ttyF[/n]{0,3})'      } # ttyF#       Computone IntelliPort II serial card
+   - { regexp: '^(ttyW[/n]{0,3})'      } # ttyW#       Specialix IO8+ serial card
+   - { regexp: '^(ttyV[/n]{0,3})'      } # ttyV#       Comtrol VS-1000 serial card
+   - { regexp: '^(ttyM[/n]{0,3})'      } # ttyM#       ISI serial card
+   - { regexp: '^(ttyT[/n]{0,3})'      } # ttyT#       Technology Concepts serial card
+   - { regexp: '^(ttySR[/n]{0,3})'     } # ttySR#      Specialix RIO serial card
+   - { regexp: '^(ttyCH[/n]{0,3})'     } # ttyCH#      Chase Research AT/PCI-Fast serial card
+   - { regexp: '^(ttyMX[/n]{0,3})'     } # ttyMX#      Moxa Intellio serial card
+   - { regexp: '^(ttySI[/n]{0,3})'     } # ttySI#      SmartIO serial card
+   - { regexp: '^(ttyUSB[/n]{0,3})'    } # ttyUSB#     USB dongles
+   - { regexp: '^(ttyLU[/n]{0,3})'     } # ttyLU#      LinkUp Systems L72xx UARTs
+   - { regexp: '^(ttySA[/n]{0,3})'     } # ttySA#      StrongARM builtin serial ports
+   - { regexp: '^(ttySC[/n]{0,3})'     } # ttySC#      SCI serial port (SuperH) ports and SC26xx serial ports
+   - { regexp: '^(ttyAM[/n]{0,3})'     } # ttyAM#      ARM "AMBA" serial ports
+   - { regexp: '^(ttyAMA[/n]{0,3})'    } # ttyAMA#     Embedded ARM AMBA PL011 ports (e.g. emulated by QEMU)
+   - { regexp: '^(ttyDB[/n]{0,3})'     } # ttyDB#      DataBooster serial ports
+   - { regexp: '^(ttySG[/n]{0,3})'     } # ttySG#      SGI Altix console ports
+   - { regexp: '^(ttySMX[/n]{0,3})'    } # ttySMX#     Motorola i.MX ports
+   - { regexp: '^(ttyMM[/n]{0,3})'     } # ttyMM#      Marvell MPSC ports
+   - { regexp: '^(ttyCPM[/n]{0,3})'    } # ttyCPM#     PPC CPM (SCC or SMC) ports
+   - { regexp: '^(ttyIOC[/n]{0,3})'    } # ttyIOC#     Altix & Altix ioc4, serial cards
+   - { regexp: '^(ttyVR[/n]{0,3})'     } # ttyVR#      NEC VR4100 series SIU & SSIU
+   - { regexp: '^(ttySA[/n]{0,3})'     } # ttySA#      StrongARM builtin serial ports
+   - { regexp: '^(ttySIOC[/n]{0,3})'   } # ttySIOC#    Altix ioc3 serial cards
+   - { regexp: '^(ttyPSC[/n]{0,3})'    } # ttyPSC#     PPC PSC ports
+   - { regexp: '^(ttyAT[/n]{0,3})'     } # ttyAT#      ATMEL serial ports
+   - { regexp: '^(ttyNX[/n]{0,3})'     } # ttyNX#      Hilscher netX serial port
+   - { regexp: '^(ttyUL[/n]{0,3})'     } # ttyUL#      Xilinux uartlite - port
+   - { regexp: '^(xvc[/n]{0,3})'       } # xvc#        Xen virtual console - port 0
+   - { regexp: '^(ttyPZ[/n]{0,3})'     } # ttyPZ#      pmac_zilog - port
+   - { regexp: '^(ttyTX[/n]{0,3})'     } # ttyTX#      TX39/49 serial port
+   - { regexp: '^(ttyMAX[/n]{0,3})'    } # ttyMAX#     MAX3100 serial ports
+   - { regexp: '^(ttyO[/n]{0,3})'      } # ttyO#       OMAP serial ports
+   - { regexp: '^(ttyU[/n]{0,3})'      } # ttyU#       User space serial ports
+   - { regexp: '^(ttyY[/n]{0,3})'      } # ttyY#       A2232 serial card
+   - { regexp: '^(3270\/tty[/n]{0,3})' } # 3270/tty#   IBM 3270 terminal Unix tty access
+   - { regexp: '^(hvc[/n]{0,3})'       } # hvc#        IBM iSeries/pSeries virtual console
+   - { regexp: '^(hvsi[/n]{0,3})'      } # hvsi#       IBM pSeries console ports
+   - { regexp: '^(ttyEQ[/n]{0,4})'     } # ttyEQ#      Equinox SST multi-port serial boards
+   - { regexp: '^(ttymxc[/n]{0,3})'    } # ttymxc#     Embedded Freescale i.MX ports
+   - { regexp: '^(lxc\/console)'       } # lxc/console LXC (Linux Containers)
+   - { regexp: '^(lxc\/tty[/n]{0,3})'  } # lxc/tty#    LXC (Linux Containers)
+   - { regexp: '^(duart[/n]{0,3})'     } # duart#      Serial Console for MIPS Swarm
+   - { regexp: '^(ttysclp[/n]{0,3})'   } # ttysclp#    s390 and s390x ports in LPAR mode
+   - { regexp: '^(ttySAC[/n]{0,3})'    } # ttySAC#     ODROID XU4 serial console
+  notify:
+#    - Reboot host
+  tags:
+    - CIS_5.5
+    - CIS_5.5.1
