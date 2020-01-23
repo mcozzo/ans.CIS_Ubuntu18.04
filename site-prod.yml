@@ -1,7 +1,11 @@
 all:
   hosts:
-    10.11.14.51:
-    #172.16.14.182:
+    10.11.14.153:
+      vars:
+        IPTABLES_RULES_V4 = "foo"
+#    172.16.14.182:
+#      vars:
+#        IPTABLES_RULES_V4 = "foo"
   vars:
     ansible_connection: ssh
     ansible_user: ansible-svc
@@ -43,3 +47,8 @@ all:
     NTP_SERVER3: 2.ubuntu.pool.ntp.org
     NTP_SERVER4: 3.ubuntu.pool.ntp.org
 
+    # CIS_5.6
+    # These users are given sudo access in this play
+    SUDO_USERS:
+      - mattcozzolino
+      - ansible-svc
