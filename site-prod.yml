@@ -3,7 +3,7 @@ all:
     10.11.14.153:
       vars:
         IPTABLES_RULES_V4 = "foo"
-#    172.16.14.182:
+#    10.100.84.55:
 #      vars:
 #        IPTABLES_RULES_V4 = "foo"
   vars:
