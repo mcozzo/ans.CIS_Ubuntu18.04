@@ -15,21 +15,28 @@ Skip if your running from Linux / Mac
 * https://docs.microsoft.com/en-us/windows/wsl/initialize-distro 
 
 #### Update APT
+Update apt, and upgrade packages
 ```bash
 sudo apt-get update
 sudo apt-get upgrade
 ```
 
 #### Install Ansible 
+https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu 
 ```bash
-sudo apt update
-sudo apt install software-properties-common
-sudo apt-add-repository --yes --update ppa:ansible/ansible
-sudo apt install ansible
+apt update
+apt install software-properties-common
+apt-add-repository --yes --update ppa:ansible/ansible
+apt install ansible
 ```
 
-### Pulli config from git
-Create a folder, initialize git, pull the repo
+### Pull config from git
+Git should already be installed, if not, install with apt. 
+```bash
+apt update
+apt install git
+```
+Create a folder, initialize git, pull the repo.
 ```bash
 mkdir ~/git
 mkdir ~/git/ans.CIS_Ubuntu18.04
@@ -55,6 +62,7 @@ ansible-playbook -i site-test.yml site-play.yml --tags CIS_1,CIS_2.1
 ```
 
 ## Commit changes / backup config
+Probably want to fork and write to your own repository. Or, contact me and you can update this repository.
 ```bash
 git add *
 git commit -m "<Change This>"
