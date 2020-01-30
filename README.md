@@ -1,5 +1,6 @@
 # CIS hardening Ubuntu 18.04
-This runs against a set of ubuntu 18.04 hosts and configures the system based on CIS v1.0.0 recommendations.
+This runs against a set of ubuntu 18.04 hosts and configures the system based on CIS v1.0.0 recommendations. 
+At least L1 settings, some L2 stuff where it was easy to add.
 
 ## Readme notes
 ### Make sure to set your variables
