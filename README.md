@@ -9,6 +9,7 @@ This runs against a set of ubuntu 18.04 hosts and configures the system based on
 ## Getting started 
 ### Setting up environment
 #### Install WSL
+Skip if your running from Linux / Mac
 * https://docs.microsoft.com/en-us/windows/wsl/install-on-server
 * https://docs.microsoft.com/en-us/windows/wsl/install-manual     
 * https://docs.microsoft.com/en-us/windows/wsl/initialize-distro 
