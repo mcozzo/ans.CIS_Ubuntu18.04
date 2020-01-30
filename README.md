@@ -1,10 +1,10 @@
 # CIS hardening Ubuntu 18.04
-## Readme notes
-### Configure grub password 
-Section 1.4 Please follow the directions and update the password for the GRUB template file
+This runs against a set of ubuntu 18.04 hosts and configures the system based on CIS v1.0.0 recommendations.
 
-### Configure logging host
-Section 4.2 This could come out and be palced in a global variable
+## Readme notes
+### Make sure to set your variables
+* Section 1.4 Please follow the directions and update the password for the GRUB template file. 
+* Look at the ToDo items. there's some stuff that isn't 100% complete, as expected. 
 
 ## Getting started 
 ### Setting up environment
