@@ -61,10 +61,10 @@ git push -u origin master
 ```
 
 ## ToDo
-- [ ] CIS_1.7 collapse all of the lineinfile to a single play, using with_items
-- [ ] CIS_2.2 Clean up service shutdown/removal
-- [ ] CIS_3.2 collapse all of the lineinfile to a single play, using with_items
+- [ ] CIS_1.7    - collapse all of the lineinfile to a single play, using with_items
+- [ ] CIS_2.2    - Clean up service shutdown/removal
+- [ ] CIS_3.2    - collapse all of the lineinfile to a single play, using with_items
 - [ ] CIS_5.2.11 - MACs config is currently disabled. Need to add version to ansible run
 - [ ] CIS_5.2.14 - Set the appropriate variables in group_vars/all.yml
 - [ ] CIS_5.2.14 - Uncomment allow/deny lines in roles/CIS_5.2/tasks/main.yml
-- [ ] CIS_6.2 - Mostly copy / run scripts. Need some better logic to run against "discovered folders"
+- [ ] CIS_6.2    - Mostly copy & run scripts. Need some better logic to run against "discovered folders"
